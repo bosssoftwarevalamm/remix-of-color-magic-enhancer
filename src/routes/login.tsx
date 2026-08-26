@@ -89,6 +89,100 @@ function SoftwareValaLogin() {
   const [aiPanelOpen, setAiPanelOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
 
+  const navigate = useNavigate();
+  const search = Route.useSearch();
+  const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [remember, setRemember] = useState(true);
+  const [busy, setBusy] = useState(false);
+
+  const redirectTarget =
+    typeof search.redirect === "string" && search.redirect.startsWith("/")
+      ? search.redirect
+      : "/";
+
+  // Already signed in? Go straight through.
+  useEffect(() => {
+    let active = true;
+    supabase.auth.getSession().then(({ data }) => {
+      if (active && data.session) navigate({ href: redirectTarget, replace: true });
+    });
+    const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_IN" && session) navigate({ href: redirectTarget, replace: true });
+    });
+    return () => {
+      active = false;
+      sub.subscription.unsubscribe();
+    };
+  }, [navigate, redirectTarget]);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (busy) return;
+    if (!email.trim() || !password) {
+      toast.error("Enter your email and password.");
+      return;
+    }
+    setBusy(true);
+    try {
+      if (mode === "signup") {
+        const { data, error } = await supabase.auth.signUp({
+          email: email.trim(),
+          password,
+          options: { emailRedirectTo: `${window.location.origin}/login` },
+        });
+        if (error) throw error;
+        if (data.session) {
+          toast.success("Account created. Welcome aboard!");
+        } else {
+          toast.success("Account created — check your email to confirm it.");
+        }
+      } else {
+        const { error } = await supabase.auth.signInWithPassword({
+          email: email.trim(),
+          password,
+        });
+        if (error) throw error;
+        toast.success("Signed in.");
+        try {
+          localStorage.setItem("sv:remember-email", remember ? email.trim() : "");
+        } catch { /* ignore */ }
+      }
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Something went wrong.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    if (!email.trim()) {
+      toast.error("Enter your email first, then tap Forgot password.");
+      return;
+    }
+    setBusy(true);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+        redirectTo: `${window.location.origin}/reset-password`,
+      });
+      if (error) throw error;
+      toast.success("Password reset link sent to your email.");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Could not send reset link.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  // Restore a remembered email.
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("sv:remember-email");
+      if (saved) setEmail(saved);
+    } catch { /* ignore */ }
+  }, []);
+
   useEffect(() => {
     if (!langOpen) return;
     const onPointerDown = (event: MouseEvent) => {
@@ -99,6 +193,7 @@ function SoftwareValaLogin() {
     document.addEventListener("mousedown", onPointerDown);
     return () => document.removeEventListener("mousedown", onPointerDown);
   }, [langOpen]);
+
 
   return (
     <main
