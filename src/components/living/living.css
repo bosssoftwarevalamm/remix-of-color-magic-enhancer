@@ -1,0 +1,75 @@
+/* Living Homepage — GPU-friendly keyframes.
+   Only transform / opacity are animated so every layer stays on the compositor. */
+
+@keyframes sv-blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95%, 97% { transform: scaleY(0.08); }
+}
+.sv-mascot-blink { animation: sv-blink 5.5s ease-in-out infinite; will-change: transform; }
+
+@keyframes sv-tail {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(10deg); }
+}
+.sv-mascot-tail { animation: sv-tail 2.2s ease-in-out infinite; will-change: transform; }
+.sv-mascot-tail-fast { animation: sv-tail 0.5s ease-in-out infinite; will-change: transform; }
+
+@keyframes sv-wave {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-26deg); }
+}
+.sv-mascot-wave { animation: sv-wave 0.6s ease-in-out infinite; will-change: transform; }
+
+@keyframes sv-breathe {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(0, -3px, 0) scale(1.012); }
+}
+.sv-breathe { animation: sv-breathe 4s ease-in-out infinite; will-change: transform; }
+
+@keyframes sv-drift {
+  0% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(12px, -18px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+.sv-drift { animation: sv-drift var(--sv-drift-duration, 14s) ease-in-out infinite; will-change: transform; }
+
+@keyframes sv-fall {
+  0% { transform: translate3d(0, -10%, 0); opacity: 0; }
+  10% { opacity: var(--sv-fall-opacity, 0.7); }
+  100% { transform: translate3d(var(--sv-fall-drift, 20px), 110vh, 0); opacity: 0; }
+}
+.sv-fall { animation: sv-fall var(--sv-fall-duration, 12s) linear infinite; will-change: transform, opacity; }
+
+@keyframes sv-twinkle {
+  0%, 100% { opacity: 0.15; transform: scale(0.8); }
+  50% { opacity: 0.9; transform: scale(1.15); }
+}
+.sv-twinkle { animation: sv-twinkle var(--sv-twinkle-duration, 3.5s) ease-in-out infinite; will-change: opacity, transform; }
+
+@keyframes sv-confetti {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 1; }
+  100% { transform: translate3d(var(--sv-confetti-x, 0px), var(--sv-confetti-y, 260px)) rotate(var(--sv-confetti-r, 540deg)); opacity: 0; }
+}
+.sv-confetti { animation: sv-confetti var(--sv-confetti-duration, 1.6s) cubic-bezier(0.2, 0.7, 0.3, 1) forwards; will-change: transform, opacity; }
+
+/* Magnetic / 3D helpers */
+.sv-tilt {
+  transform-style: preserve-3d;
+  transition: transform 220ms cubic-bezier(0.2, 0.8, 0.3, 1), box-shadow 220ms ease;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sv-mascot-blink,
+  .sv-mascot-tail,
+  .sv-mascot-tail-fast,
+  .sv-mascot-wave,
+  .sv-breathe,
+  .sv-drift,
+  .sv-fall,
+  .sv-twinkle,
+  .sv-confetti {
+    animation: none !important;
+  }
+  .sv-tilt { transition: none !important; }
+}
