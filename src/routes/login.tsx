@@ -455,13 +455,10 @@ function SoftwareValaLogin() {
                 }}
               />
 
-              <form
-                className="space-y-4 sm:space-y-5"
-                onSubmit={(e) => e.preventDefault()}
-              >
+              <form className="space-y-4 sm:space-y-5" onSubmit={handleSubmit}>
                 <div>
-                  <label className="block mb-1.5 sm:mb-2 text-xs sm:text-sm text-white/60">
-                    Email or username
+                  <label htmlFor="sv-email" className="block mb-1.5 sm:mb-2 text-xs sm:text-sm text-white/60">
+                    Email
                   </label>
                   <div className="group relative">
                     <Mail
@@ -469,7 +466,13 @@ function SoftwareValaLogin() {
                       className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 transition-colors group-focus-within:text-amber-200/70"
                     />
                     <input
-                      type="text"
+                      id="sv-email"
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       placeholder="Enter your email"
                       className="w-full h-12 sm:h-14 rounded-2xl border border-white/10 bg-white/[0.045] pl-12 pr-4 text-sm sm:text-base text-white placeholder:text-white/25 outline-none transition-all duration-300 focus:border-amber-200/30 focus:bg-white/[0.07] focus:shadow-[0_0_0_4px_rgba(255,205,110,.06),0_0_24px_-6px_rgba(255,190,90,.25)]"
                     />
@@ -477,7 +480,7 @@ function SoftwareValaLogin() {
                 </div>
 
                 <div>
-                  <label className="block mb-1.5 sm:mb-2 text-xs sm:text-sm text-white/60">
+                  <label htmlFor="sv-password" className="block mb-1.5 sm:mb-2 text-xs sm:text-sm text-white/60">
                     Password
                   </label>
                   <div className="group relative">
@@ -486,7 +489,14 @@ function SoftwareValaLogin() {
                       className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 transition-colors group-focus-within:text-amber-200/70"
                     />
                     <input
+                      id="sv-password"
+                      name="password"
                       type={showPassword ? "text" : "password"}
+                      autoComplete={mode === "signup" ? "new-password" : "current-password"}
+                      required
+                      minLength={6}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                       placeholder="Enter your password"
                       className="w-full h-12 sm:h-14 rounded-2xl border border-white/10 bg-white/[0.045] pl-12 pr-12 text-sm sm:text-base text-white placeholder:text-white/25 outline-none transition-all duration-300 focus:border-amber-200/30 focus:bg-white/[0.07] focus:shadow-[0_0_0_4px_rgba(255,205,110,.06),0_0_24px_-6px_rgba(255,190,90,.25)]"
                     />
@@ -505,12 +515,19 @@ function SoftwareValaLogin() {
 
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 text-sm">
                   <label className="flex items-center gap-2 text-white/45 cursor-pointer">
-                    <input type="checkbox" className="accent-red-500 w-4 h-4" />
+                    <input
+                      type="checkbox"
+                      className="accent-red-500 w-4 h-4"
+                      checked={remember}
+                      onChange={(e) => setRemember(e.target.checked)}
+                    />
                     Remember me
                   </label>
                   <button
                     type="button"
-                    className="text-white/60 hover:text-white transition text-left sm:text-right"
+                    onClick={handleForgotPassword}
+                    disabled={busy}
+                    className="text-white/60 hover:text-white transition text-left sm:text-right disabled:opacity-50"
                   >
                     Forgot password?
                   </button>
@@ -518,23 +535,32 @@ function SoftwareValaLogin() {
 
                 <button
                   type="submit"
-                  className="relative overflow-hidden w-full h-12 sm:h-14 rounded-2xl bg-[#e31b23] hover:bg-[#f1262f] active:scale-[.98] text-white font-semibold text-sm sm:text-base shadow-[0_12px_35px_rgba(227,27,35,.22)] hover:shadow-[0_16px_45px_rgba(227,27,35,.35)] transition-all duration-300"
+                  disabled={busy}
+                  className="relative overflow-hidden w-full h-12 sm:h-14 rounded-2xl bg-[#e31b23] hover:bg-[#f1262f] active:scale-[.98] text-white font-semibold text-sm sm:text-base shadow-[0_12px_35px_rgba(227,27,35,.22)] hover:shadow-[0_16px_45px_rgba(227,27,35,.35)] transition-all duration-300 disabled:opacity-70"
                 >
                   <div className="sv-shine" />
-                  <span className="relative">Sign In</span>
+                  <span className="relative">
+                    {busy
+                      ? "Please wait…"
+                      : mode === "signup"
+                        ? "Create Account"
+                        : "Sign In"}
+                  </span>
                 </button>
               </form>
             </div>
 
             <p className="mt-5 sm:mt-7 text-center text-xs sm:text-sm text-white/35">
-              Don't have an account?{" "}
+              {mode === "signup" ? "Already have an account? " : "Don't have an account? "}
               <button
                 type="button"
+                onClick={() => setMode(mode === "signup" ? "signin" : "signup")}
                 className="text-white hover:text-red-400 transition"
               >
-                Create account
+                {mode === "signup" ? "Sign in" : "Create account"}
               </button>
             </p>
+
 
             {/* Contact & social links */}
             <div className="mt-6 sm:mt-8">
