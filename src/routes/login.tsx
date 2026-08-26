@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import logoAsset from "../assets/software-vala-logo.jpg.asset.json";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/login")({
   head: () => ({
     meta: [
       { title: "Sign In | Software Vala" },
