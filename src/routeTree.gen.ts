@@ -14,6 +14,7 @@ import { Route as ControlPanelRouteImport } from './routes/control-panel'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VerifyCodeRouteImport } from './routes/verify.$code'
+import { Route as StarRoleRouteImport } from './routes/star.$role'
 import { Route as MModuleRouteImport } from './routes/m.$module'
 import { Route as DashboardRoleRouteImport } from './routes/dashboard.$role'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
@@ -113,6 +114,11 @@ const IndexRoute = IndexRouteImport.update({
 const VerifyCodeRoute = VerifyCodeRouteImport.update({
   id: '/verify/$code',
   path: '/verify/$code',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StarRoleRoute = StarRoleRouteImport.update({
+  id: '/star/$role',
+  path: '/star/$role',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MModuleRoute = MModuleRouteImport.update({
@@ -599,6 +605,7 @@ export interface FileRoutesByFullPath {
   '/api/chat': typeof ApiChatRoute
   '/dashboard/$role': typeof DashboardRoleRoute
   '/m/$module': typeof MModuleRoute
+  '/star/$role': typeof StarRoleRoute
   '/verify/$code': typeof VerifyCodeRoute
   '/ams/$id': typeof AuthenticatedAmsIdRoute
   '/ams/new': typeof AuthenticatedAmsNewRoute
@@ -680,6 +687,7 @@ export interface FileRoutesByTo {
   '/api/chat': typeof ApiChatRoute
   '/dashboard/$role': typeof DashboardRoleRoute
   '/m/$module': typeof MModuleRoute
+  '/star/$role': typeof StarRoleRoute
   '/verify/$code': typeof VerifyCodeRoute
   '/ams/$id': typeof AuthenticatedAmsIdRoute
   '/ams/new': typeof AuthenticatedAmsNewRoute
@@ -764,6 +772,7 @@ export interface FileRoutesById {
   '/api/chat': typeof ApiChatRoute
   '/dashboard/$role': typeof DashboardRoleRoute
   '/m/$module': typeof MModuleRoute
+  '/star/$role': typeof StarRoleRoute
   '/verify/$code': typeof VerifyCodeRoute
   '/_authenticated/ams/$id': typeof AuthenticatedAmsIdRoute
   '/_authenticated/ams/new': typeof AuthenticatedAmsNewRoute
@@ -848,6 +857,7 @@ export interface FileRouteTypes {
     | '/api/chat'
     | '/dashboard/$role'
     | '/m/$module'
+    | '/star/$role'
     | '/verify/$code'
     | '/ams/$id'
     | '/ams/new'
@@ -929,6 +939,7 @@ export interface FileRouteTypes {
     | '/api/chat'
     | '/dashboard/$role'
     | '/m/$module'
+    | '/star/$role'
     | '/verify/$code'
     | '/ams/$id'
     | '/ams/new'
@@ -1012,6 +1023,7 @@ export interface FileRouteTypes {
     | '/api/chat'
     | '/dashboard/$role'
     | '/m/$module'
+    | '/star/$role'
     | '/verify/$code'
     | '/_authenticated/ams/$id'
     | '/_authenticated/ams/new'
@@ -1046,6 +1058,7 @@ export interface RootRouteChildren {
   ApiChatRoute: typeof ApiChatRoute
   DashboardRoleRoute: typeof DashboardRoleRoute
   MModuleRoute: typeof MModuleRoute
+  StarRoleRoute: typeof StarRoleRoute
   VerifyCodeRoute: typeof VerifyCodeRoute
 }
 
@@ -1084,6 +1097,13 @@ declare module '@tanstack/react-router' {
       path: '/verify/$code'
       fullPath: '/verify/$code'
       preLoaderRoute: typeof VerifyCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/star/$role': {
+      id: '/star/$role'
+      path: '/star/$role'
+      fullPath: '/star/$role'
+      preLoaderRoute: typeof StarRoleRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/m/$module': {
@@ -1814,6 +1834,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiChatRoute: ApiChatRoute,
   DashboardRoleRoute: DashboardRoleRoute,
   MModuleRoute: MModuleRoute,
+  StarRoleRoute: StarRoleRoute,
   VerifyCodeRoute: VerifyCodeRoute,
 }
 export const routeTree = rootRouteImport

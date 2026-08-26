@@ -180,8 +180,14 @@ function Index() {
                 setActiveRole(roleId);
                 return;
               }
+              if (roleId.startsWith("star_")) {
+                const role = roleId.slice("star_".length).replace(/_/g, "-");
+                navigate({ to: "/star/$role", params: { role } });
+                return;
+              }
               navigate({ to: "/m/$module", params: { module: roleId } });
             }}
+
             onLogout={() => toast.info("Logging out...")}
           />
         </div>
