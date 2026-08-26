@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
 import { Eye, EyeOff, LockKeyhole } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import logoAsset from "../assets/software-vala-logo.jpg.asset.json";
@@ -168,6 +169,7 @@ function ResetPasswordPage() {
           </button>
         </p>
       </div>
+      <Toaster richColors position="bottom-right" />
     </main>
   );
 }

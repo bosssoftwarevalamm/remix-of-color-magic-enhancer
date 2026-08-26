@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
 import {
   Bot,
   Eye,
@@ -843,6 +844,7 @@ function SoftwareValaLogin() {
           {chatOpen ? <X size={20} /> : <MessageCircle size={22} />}
         </button>
       </div>
+      <Toaster richColors position="bottom-right" />
     </main>
   );
 }
