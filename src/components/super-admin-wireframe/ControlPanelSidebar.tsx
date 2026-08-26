@@ -131,7 +131,21 @@ const ROLE_CATEGORIES = [
   { id: 'security', label: 'Security', icon: Shield },
   { id: 'settings', label: 'Settings', icon: Settings },
 
+  // GRADE 9 — STAR USER DASHBOARDS (ALWAYS LAST)
+  { id: 'star_author', label: 'Author Star Dashboard', icon: PenTool },
+  { id: 'star_vendor', label: 'Vendor Star Dashboard', icon: Store },
+  { id: 'star_reseller', label: 'Reseller Star Dashboard', icon: Handshake },
+  { id: 'star_affiliate', label: 'Affiliate Star Dashboard', icon: Link2 },
+  { id: 'star_influencer', label: 'Influencer Star Dashboard', icon: Sparkles },
+  { id: 'star_franchise', label: 'Franchise Star Dashboard', icon: Building2 },
+  { id: 'star_seo', label: 'SEO Star Dashboard', icon: Search },
+  { id: 'star_admin', label: 'Admin Star Dashboard', icon: Shield },
+  { id: 'star_developer', label: 'Developer Star Dashboard', icon: Code2 },
+  { id: 'star_dev_manager', label: 'Dev Manager Star Dashboard', icon: Code2 },
+  { id: 'star_promise_tracker', label: 'Promise Tracker Star Dashboard', icon: Timer },
+
 ] as const;
+
 
 type RoleId = typeof ROLE_CATEGORIES[number]['id'];
 
