@@ -105,24 +105,39 @@ function SoftwareValaLogin() {
   const [remember, setRemember] = useState(true);
   const [busy, setBusy] = useState(false);
 
-  const redirectTarget =
+  const explicitRedirect =
     typeof search.redirect === "string" && search.redirect.startsWith("/")
       ? search.redirect
-      : "/";
+      : null;
 
-  // Already signed in? Go straight through.
+  // Already signed in? Go straight through — to the user's own dashboard.
   useEffect(() => {
     let active = true;
+
+    const go = async (userId: string) => {
+      let target = explicitRedirect;
+      if (!target) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("home_path")
+          .eq("id", userId)
+          .maybeSingle();
+        target = profile?.home_path || "/";
+      }
+      if (active) navigate({ href: target, replace: true });
+    };
+
     supabase.auth.getSession().then(({ data }) => {
-      if (active && data.session) navigate({ href: redirectTarget, replace: true });
+      if (data.session) void go(data.session.user.id);
     });
     const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "SIGNED_IN" && session) navigate({ href: redirectTarget, replace: true });
+      if (event === "SIGNED_IN" && session) void go(session.user.id);
     });
     return () => {
       active = false;
       sub.subscription.unsubscribe();
     };
+
   }, [navigate, redirectTarget]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
