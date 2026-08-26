@@ -180,6 +180,23 @@ export const MODULE_GROUPS: ModuleGroup[] = [
       { label: "AI Studio", path: "/ai" },
     ],
   },
+  {
+    group: "Star User Dashboards",
+    items: [
+      { label: "Author Star Dashboard", path: "/star/author" },
+      { label: "Vendor Star Dashboard", path: "/star/vendor" },
+      { label: "Reseller Star Dashboard", path: "/star/reseller" },
+      { label: "Affiliate Star Dashboard", path: "/star/affiliate" },
+      { label: "Influencer Star Dashboard", path: "/star/influencer" },
+      { label: "Franchise Star Dashboard", path: "/star/franchise" },
+      { label: "SEO Star Dashboard", path: "/star/seo" },
+      { label: "Admin Star Dashboard", path: "/star/admin" },
+      { label: "Developer Star Dashboard", path: "/star/developer" },
+      { label: "Dev Manager Star Dashboard", path: "/star/dev-manager" },
+      { label: "Promise Tracker Star Dashboard", path: "/star/promise-tracker" },
+    ],
+  },
 ];
+
 
 export const MODULES = MODULE_GROUPS.flatMap((group) => group.items);
