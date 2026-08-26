@@ -138,7 +138,7 @@ function SoftwareValaLogin() {
       sub.subscription.unsubscribe();
     };
 
-  }, [navigate, redirectTarget]);
+  }, [navigate, explicitRedirect]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
