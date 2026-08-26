@@ -16,10 +16,12 @@ import { Route as ControlPanelRouteImport } from './routes/control-panel'
 import { Route as CockpitRouteImport } from './routes/cockpit'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApplyIndexRouteImport } from './routes/apply.index'
 import { Route as VerifyCodeRouteImport } from './routes/verify.$code'
 import { Route as StarRoleRouteImport } from './routes/star.$role'
 import { Route as MModuleRouteImport } from './routes/m.$module'
 import { Route as DashboardRoleRouteImport } from './routes/dashboard.$role'
+import { Route as ApplyRoleRouteImport } from './routes/apply.$role'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AuthenticatedXpCrystalVaultRouteImport } from './routes/_authenticated/xp-crystal-vault'
 import { Route as AuthenticatedXpRouteImport } from './routes/_authenticated/xp'
@@ -129,6 +131,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApplyIndexRoute = ApplyIndexRouteImport.update({
+  id: '/apply/',
+  path: '/apply/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VerifyCodeRoute = VerifyCodeRouteImport.update({
   id: '/verify/$code',
   path: '/verify/$code',
@@ -147,6 +154,11 @@ const MModuleRoute = MModuleRouteImport.update({
 const DashboardRoleRoute = DashboardRoleRouteImport.update({
   id: '/dashboard/$role',
   path: '/dashboard/$role',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApplyRoleRoute = ApplyRoleRouteImport.update({
+  id: '/apply/$role',
+  path: '/apply/$role',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiChatRoute = ApiChatRouteImport.update({
@@ -624,10 +636,12 @@ export interface FileRoutesByFullPath {
   '/xp': typeof AuthenticatedXpRoute
   '/xp-crystal-vault': typeof AuthenticatedXpCrystalVaultRoute
   '/api/chat': typeof ApiChatRoute
+  '/apply/$role': typeof ApplyRoleRoute
   '/dashboard/$role': typeof DashboardRoleRoute
   '/m/$module': typeof MModuleRoute
   '/star/$role': typeof StarRoleRoute
   '/verify/$code': typeof VerifyCodeRoute
+  '/apply/': typeof ApplyIndexRoute
   '/ams/$id': typeof AuthenticatedAmsIdRoute
   '/ams/new': typeof AuthenticatedAmsNewRoute
   '/awards/$id': typeof AuthenticatedAwardsIdRouteWithChildren
@@ -709,10 +723,12 @@ export interface FileRoutesByTo {
   '/xp': typeof AuthenticatedXpRoute
   '/xp-crystal-vault': typeof AuthenticatedXpCrystalVaultRoute
   '/api/chat': typeof ApiChatRoute
+  '/apply/$role': typeof ApplyRoleRoute
   '/dashboard/$role': typeof DashboardRoleRoute
   '/m/$module': typeof MModuleRoute
   '/star/$role': typeof StarRoleRoute
   '/verify/$code': typeof VerifyCodeRoute
+  '/apply': typeof ApplyIndexRoute
   '/ams/$id': typeof AuthenticatedAmsIdRoute
   '/ams/new': typeof AuthenticatedAmsNewRoute
   '/awards/$id': typeof AuthenticatedAwardsIdRouteWithChildren
@@ -797,10 +813,12 @@ export interface FileRoutesById {
   '/_authenticated/xp': typeof AuthenticatedXpRoute
   '/_authenticated/xp-crystal-vault': typeof AuthenticatedXpCrystalVaultRoute
   '/api/chat': typeof ApiChatRoute
+  '/apply/$role': typeof ApplyRoleRoute
   '/dashboard/$role': typeof DashboardRoleRoute
   '/m/$module': typeof MModuleRoute
   '/star/$role': typeof StarRoleRoute
   '/verify/$code': typeof VerifyCodeRoute
+  '/apply/': typeof ApplyIndexRoute
   '/_authenticated/ams/$id': typeof AuthenticatedAmsIdRoute
   '/_authenticated/ams/new': typeof AuthenticatedAmsNewRoute
   '/_authenticated/awards/$id': typeof AuthenticatedAwardsIdRouteWithChildren
@@ -885,10 +903,12 @@ export interface FileRouteTypes {
     | '/xp'
     | '/xp-crystal-vault'
     | '/api/chat'
+    | '/apply/$role'
     | '/dashboard/$role'
     | '/m/$module'
     | '/star/$role'
     | '/verify/$code'
+    | '/apply/'
     | '/ams/$id'
     | '/ams/new'
     | '/awards/$id'
@@ -970,10 +990,12 @@ export interface FileRouteTypes {
     | '/xp'
     | '/xp-crystal-vault'
     | '/api/chat'
+    | '/apply/$role'
     | '/dashboard/$role'
     | '/m/$module'
     | '/star/$role'
     | '/verify/$code'
+    | '/apply'
     | '/ams/$id'
     | '/ams/new'
     | '/awards/$id'
@@ -1057,10 +1079,12 @@ export interface FileRouteTypes {
     | '/_authenticated/xp'
     | '/_authenticated/xp-crystal-vault'
     | '/api/chat'
+    | '/apply/$role'
     | '/dashboard/$role'
     | '/m/$module'
     | '/star/$role'
     | '/verify/$code'
+    | '/apply/'
     | '/_authenticated/ams/$id'
     | '/_authenticated/ams/new'
     | '/_authenticated/awards/$id'
@@ -1095,10 +1119,12 @@ export interface RootRouteChildren {
   ResetPasswordRoute: typeof ResetPasswordRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ApiChatRoute: typeof ApiChatRoute
+  ApplyRoleRoute: typeof ApplyRoleRoute
   DashboardRoleRoute: typeof DashboardRoleRoute
   MModuleRoute: typeof MModuleRoute
   StarRoleRoute: typeof StarRoleRoute
   VerifyCodeRoute: typeof VerifyCodeRoute
+  ApplyIndexRoute: typeof ApplyIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1152,6 +1178,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/apply/': {
+      id: '/apply/'
+      path: '/apply'
+      fullPath: '/apply/'
+      preLoaderRoute: typeof ApplyIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/verify/$code': {
       id: '/verify/$code'
       path: '/verify/$code'
@@ -1178,6 +1211,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard/$role'
       fullPath: '/dashboard/$role'
       preLoaderRoute: typeof DashboardRoleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apply/$role': {
+      id: '/apply/$role'
+      path: '/apply/$role'
+      fullPath: '/apply/$role'
+      preLoaderRoute: typeof ApplyRoleRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/chat': {
@@ -1895,10 +1935,12 @@ const rootRouteChildren: RootRouteChildren = {
   ResetPasswordRoute: ResetPasswordRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ApiChatRoute: ApiChatRoute,
+  ApplyRoleRoute: ApplyRoleRoute,
   DashboardRoleRoute: DashboardRoleRoute,
   MModuleRoute: MModuleRoute,
   StarRoleRoute: StarRoleRoute,
   VerifyCodeRoute: VerifyCodeRoute,
+  ApplyIndexRoute: ApplyIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
