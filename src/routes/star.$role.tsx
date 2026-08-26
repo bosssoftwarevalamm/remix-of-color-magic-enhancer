@@ -87,14 +87,14 @@ function DashboardPage() {
   const kpiSort = search.kpiSort as KpiSort;
   const setKpiTone = (t: KpiTone) =>
     navigate({
-      to: "/dashboard/$role",
+      to: "/star/$role",
       params: { role },
       search: (prev: Record<string, unknown>) => ({ ...prev, kpiTone: t }),
       replace: true,
     });
   const setKpiSort = (s: KpiSort) =>
     navigate({
-      to: "/dashboard/$role",
+      to: "/star/$role",
       params: { role },
       search: (prev: Record<string, unknown>) => ({ ...prev, kpiSort: s }),
       replace: true,
@@ -103,7 +103,7 @@ function DashboardPage() {
   const switchRoleUnchecked = useCallback(
     (next: RoleKey) => {
       setActiveModule(null);
-      navigate({ to: "/dashboard/$role", params: { role: next } });
+      navigate({ to: "/star/$role", params: { role: next } });
     },
     [navigate],
   );
@@ -111,7 +111,7 @@ function DashboardPage() {
     (next: RoleKey) => {
       if (!perms.accessibleRoles.includes(next)) return;
       closeModule();
-      navigate({ to: "/dashboard/$role", params: { role: next } });
+      navigate({ to: "/star/$role", params: { role: next } });
     },
     [navigate, perms.accessibleRoles],
   );
