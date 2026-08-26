@@ -60,7 +60,7 @@ function ResetPasswordPage() {
       const { error } = await supabase.auth.updateUser({ password });
       if (error) throw error;
       toast.success("Password updated. You can sign in now.");
-      navigate({ to: "/login", search: {}, replace: true });
+      navigate({ to: "/login", search: { redirect: undefined }, replace: true });
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Could not update password.");
     } finally {
@@ -162,7 +162,7 @@ function ResetPasswordPage() {
         <p className="mt-6 text-center text-xs text-white/35">
           <button
             type="button"
-            onClick={() => navigate({ to: "/login", search: {} })}
+            onClick={() => navigate({ to: "/login", search: { redirect: undefined } })}
             className="text-white transition hover:text-red-400"
           >
             Back to sign in
