@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { toast } from "sonner";
 import {
   Bot,
   Eye,
@@ -15,9 +16,14 @@ import {
   X,
   Youtube,
 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import logoAsset from "../assets/software-vala-logo.jpg.asset.json";
 
 export const Route = createFileRoute("/login")({
+  ssr: false,
+  validateSearch: (search: Record<string, unknown>) => ({
+    redirect: typeof search.redirect === "string" ? search.redirect : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Sign In | Software Vala" },
@@ -38,6 +44,7 @@ export const Route = createFileRoute("/login")({
   }),
   component: SoftwareValaLogin,
 });
+
 
 const STARS = [
   { top: "8%", left: "12%", size: 2, dur: "3.6s", delay: "0s" },
