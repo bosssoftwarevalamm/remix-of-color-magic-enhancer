@@ -1,11 +1,11 @@
 {
-  "version": 1,
   "asset_id": "a17688c7-5117-4e60-8ad2-21be1a7b67d6",
-  "project_id": "2fbe18ff-9e4b-4987-8c31-e701aca0f0c6",
-  "url": "/__l5e/assets-v1/a17688c7-5117-4e60-8ad2-21be1a7b67d6/softwarevala-logo-round-v2.jpg",
-  "r2_key": "a/v1/2fbe18ff-9e4b-4987-8c31-e701aca0f0c6/a17688c7-5117-4e60-8ad2-21be1a7b67d6/softwarevala-logo-round-v2.jpg",
-  "original_filename": "softwarevala-logo-round-v2.jpg",
-  "size": 24730,
   "content_type": "image/jpeg",
-  "created_at": "2026-08-26T17:08:59Z"
+  "created_at": "2026-08-26T17:08:59Z",
+  "original_filename": "softwarevala-logo-round-v2.jpg",
+  "project_id": "ae939990-068c-44bf-8704-302fa99a6d08",
+  "r2_key": "a/v1/ae939990-068c-44bf-8704-302fa99a6d08/a17688c7-5117-4e60-8ad2-21be1a7b67d6/softwarevala-logo-round-v2.jpg",
+  "size": 24730,
+  "url": "/__l5e/assets-v1/a17688c7-5117-4e60-8ad2-21be1a7b67d6/softwarevala-logo-round-v2.jpg",
+  "version": 1
 }
