@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as FinanceManagerRouteImport } from './routes/finance-manager'
 import { Route as ControlPanelRouteImport } from './routes/control-panel'
 import { Route as CockpitRouteImport } from './routes/cockpit'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
@@ -110,6 +111,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FinanceManagerRoute = FinanceManagerRouteImport.update({
+  id: '/finance-manager',
+  path: '/finance-manager',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ControlPanelRoute = ControlPanelRouteImport.update({
@@ -582,6 +588,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/cockpit': typeof CockpitRoute
   '/control-panel': typeof ControlPanelRoute
+  '/finance-manager': typeof FinanceManagerRoute
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -670,6 +677,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cockpit': typeof CockpitRoute
   '/control-panel': typeof ControlPanelRoute
+  '/finance-manager': typeof FinanceManagerRoute
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -759,6 +767,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/cockpit': typeof CockpitRoute
   '/control-panel': typeof ControlPanelRoute
+  '/finance-manager': typeof FinanceManagerRoute
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -849,6 +858,7 @@ export interface FileRouteTypes {
     | '/'
     | '/cockpit'
     | '/control-panel'
+    | '/finance-manager'
     | '/login'
     | '/reset-password'
     | '/sitemap.xml'
@@ -937,6 +947,7 @@ export interface FileRouteTypes {
     | '/'
     | '/cockpit'
     | '/control-panel'
+    | '/finance-manager'
     | '/login'
     | '/reset-password'
     | '/sitemap.xml'
@@ -1025,6 +1036,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/cockpit'
     | '/control-panel'
+    | '/finance-manager'
     | '/login'
     | '/reset-password'
     | '/sitemap.xml'
@@ -1115,6 +1127,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   CockpitRoute: typeof CockpitRoute
   ControlPanelRoute: typeof ControlPanelRoute
+  FinanceManagerRoute: typeof FinanceManagerRoute
   LoginRoute: typeof LoginRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -1148,6 +1161,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/finance-manager': {
+      id: '/finance-manager'
+      path: '/finance-manager'
+      fullPath: '/finance-manager'
+      preLoaderRoute: typeof FinanceManagerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/control-panel': {
@@ -1931,6 +1951,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   CockpitRoute: CockpitRoute,
   ControlPanelRoute: ControlPanelRoute,
+  FinanceManagerRoute: FinanceManagerRoute,
   LoginRoute: LoginRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
