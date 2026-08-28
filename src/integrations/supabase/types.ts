@@ -74,6 +74,39 @@ export type Database = {
         }
         Relationships: []
       }
+      finance_ai_controls: {
+        Row: {
+          auto_stop_percent: number
+          budget: number
+          id: string
+          provider: string
+          service: string
+          spike_threshold: number
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          auto_stop_percent?: number
+          budget?: number
+          id?: string
+          provider: string
+          service: string
+          spike_threshold?: number
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          auto_stop_percent?: number
+          budget?: number
+          id?: string
+          provider?: string
+          service?: string
+          spike_threshold?: number
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       finance_alerts: {
         Row: {
           category: string
@@ -833,6 +866,35 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      finance_adjust_wallet_atomic: {
+        Args: {
+          p_actor: string
+          p_amount: number
+          p_entry_type: string
+          p_reason: string
+          p_reference: string
+          p_wallet_id: string
+        }
+        Returns: {
+          balance: number
+          created_at: string
+          currency: string
+          id: string
+          last_activity_at: string
+          low_balance_threshold: number
+          owner_code: string
+          owner_name: string
+          owner_type: string
+          region: string
+          status: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "finance_wallets"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
