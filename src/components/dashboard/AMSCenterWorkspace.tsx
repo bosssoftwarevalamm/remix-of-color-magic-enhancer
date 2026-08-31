@@ -95,9 +95,24 @@ function rewardValueOf(r: CrudRecord) {
   return { coins, gems, xp };
 }
 
-export function AMSCenterWorkspace({ onBack }: { onBack: () => void }) {
+export function AMSCenterWorkspace({
+  onBack,
+  tab: tabProp,
+  onTabChange,
+  hideTabs = false,
+  hideHeader = false,
+}: {
+  onBack?: () => void;
+  tab?: Tab;
+  onTabChange?: (t: Tab) => void;
+  hideTabs?: boolean;
+  hideHeader?: boolean;
+}) {
   const crud = useCrud(AMS_STORE_ROLE, AMS_STORE_MODULE);
-  const [tab, setTab] = useState<Tab>("overview");
+  const [tabState, setTabState] = useState<Tab>("overview");
+  const tab = tabProp ?? tabState;
+  const setTab = (t: Tab) => { setTabState(t); onTabChange?.(t); };
+
   const [q, setQ] = useState("");
 
   const active = useMemo(() => crud.records.filter(isActive), [crud.records]);
