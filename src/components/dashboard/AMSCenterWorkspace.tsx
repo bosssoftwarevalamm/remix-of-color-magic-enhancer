@@ -215,6 +215,7 @@ export function AMSCenterWorkspace({
       {/* Tabs */}
       <Tabs value={tab} onValueChange={(v) => setTab(v as Tab)} className="space-y-4">
         <div className="flex flex-col md:flex-row md:items-center gap-3 justify-between">
+          {!hideTabs && (
           <TabsList className="flex flex-wrap gap-1 h-auto p-1 bg-surface border border-border">
             {TABS.map(t => (
               <TabsTrigger key={t.key} value={t.key} className="gap-1.5 text-xs">
@@ -222,6 +223,8 @@ export function AMSCenterWorkspace({
               </TabsTrigger>
             ))}
           </TabsList>
+          )}
+
           <div className="relative w-full md:w-64">
             <Search className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
             <Input
