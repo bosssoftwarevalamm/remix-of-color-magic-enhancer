@@ -24,11 +24,11 @@ type AmsKind =
   | "treasure" | "milestone" | "login-reward" | "birthday"
   | "purchase-reward" | "premium" | "announcement";
 
-type Tab =
+export type Tab =
   | "overview" | "offers" | "rewards" | "missions" | "bonuses"
   | "wallet" | "games" | "campaigns" | "history" | "notifications";
 
-const TABS: { key: Tab; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
+export const TABS: { key: Tab; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
   { key: "overview",      label: "Overview",      icon: Sparkles },
   { key: "offers",        label: "Offers",        icon: Gift },
   { key: "rewards",       label: "Rewards",       icon: Trophy },
