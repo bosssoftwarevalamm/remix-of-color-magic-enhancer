@@ -24,11 +24,11 @@ type AmsKind =
   | "treasure" | "milestone" | "login-reward" | "birthday"
   | "purchase-reward" | "premium" | "announcement";
 
-type Tab =
+export type Tab =
   | "overview" | "offers" | "rewards" | "missions" | "bonuses"
   | "wallet" | "games" | "campaigns" | "history" | "notifications";
 
-const TABS: { key: Tab; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
+export const TABS: { key: Tab; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
   { key: "overview",      label: "Overview",      icon: Sparkles },
   { key: "offers",        label: "Offers",        icon: Gift },
   { key: "rewards",       label: "Rewards",       icon: Trophy },
@@ -95,9 +95,24 @@ function rewardValueOf(r: CrudRecord) {
   return { coins, gems, xp };
 }
 
-export function AMSCenterWorkspace({ onBack }: { onBack: () => void }) {
+export function AMSCenterWorkspace({
+  onBack,
+  tab: tabProp,
+  onTabChange,
+  hideTabs = false,
+  hideHeader = false,
+}: {
+  onBack?: () => void;
+  tab?: Tab;
+  onTabChange?: (t: Tab) => void;
+  hideTabs?: boolean;
+  hideHeader?: boolean;
+}) {
   const crud = useCrud(AMS_STORE_ROLE, AMS_STORE_MODULE);
-  const [tab, setTab] = useState<Tab>("overview");
+  const [tabState, setTabState] = useState<Tab>("overview");
+  const tab = tabProp ?? tabState;
+  const setTab = (t: Tab) => { setTabState(t); onTabChange?.(t); };
+
   const [q, setQ] = useState("");
 
   const active = useMemo(() => crud.records.filter(isActive), [crud.records]);
@@ -149,10 +164,13 @@ export function AMSCenterWorkspace({ onBack }: { onBack: () => void }) {
   return (
     <section className="space-y-5">
       {/* Header */}
+      {!hideHeader && (
       <div className="flex items-center gap-3">
-        <Button variant="ghost" size="sm" onClick={onBack} className="gap-1.5">
-          <ArrowLeft className="h-4 w-4" /> Back
-        </Button>
+        {onBack && (
+          <Button variant="ghost" size="sm" onClick={onBack} className="gap-1.5">
+            <ArrowLeft className="h-4 w-4" /> Back
+          </Button>
+        )}
         <div className="min-w-0">
           <h1 className="text-lg md:text-xl font-bold tracking-tight">AMS Center</h1>
           <p className="text-[11px] text-muted-foreground">
@@ -160,6 +178,8 @@ export function AMSCenterWorkspace({ onBack }: { onBack: () => void }) {
           </p>
         </div>
       </div>
+      )}
+
 
       {/* Player card */}
       <div className="relative overflow-hidden rounded-3xl border border-border shadow-card">
@@ -195,6 +215,7 @@ export function AMSCenterWorkspace({ onBack }: { onBack: () => void }) {
       {/* Tabs */}
       <Tabs value={tab} onValueChange={(v) => setTab(v as Tab)} className="space-y-4">
         <div className="flex flex-col md:flex-row md:items-center gap-3 justify-between">
+          {!hideTabs && (
           <TabsList className="flex flex-wrap gap-1 h-auto p-1 bg-surface border border-border">
             {TABS.map(t => (
               <TabsTrigger key={t.key} value={t.key} className="gap-1.5 text-xs">
@@ -202,6 +223,8 @@ export function AMSCenterWorkspace({ onBack }: { onBack: () => void }) {
               </TabsTrigger>
             ))}
           </TabsList>
+          )}
+
           <div className="relative w-full md:w-64">
             <Search className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
             <Input
