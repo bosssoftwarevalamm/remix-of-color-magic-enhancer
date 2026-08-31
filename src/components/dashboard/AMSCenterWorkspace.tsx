@@ -164,10 +164,13 @@ export function AMSCenterWorkspace({
   return (
     <section className="space-y-5">
       {/* Header */}
+      {!hideHeader && (
       <div className="flex items-center gap-3">
-        <Button variant="ghost" size="sm" onClick={onBack} className="gap-1.5">
-          <ArrowLeft className="h-4 w-4" /> Back
-        </Button>
+        {onBack && (
+          <Button variant="ghost" size="sm" onClick={onBack} className="gap-1.5">
+            <ArrowLeft className="h-4 w-4" /> Back
+          </Button>
+        )}
         <div className="min-w-0">
           <h1 className="text-lg md:text-xl font-bold tracking-tight">AMS Center</h1>
           <p className="text-[11px] text-muted-foreground">
@@ -175,6 +178,8 @@ export function AMSCenterWorkspace({
           </p>
         </div>
       </div>
+      )}
+
 
       {/* Player card */}
       <div className="relative overflow-hidden rounded-3xl border border-border shadow-card">
