@@ -117,6 +117,7 @@ export const MODULE_GROUPS: ModuleGroup[] = [
     items: [
       { label: "Command Center", path: "/command-center" },
       { label: "AMS Manager", path: "/ams-manager" },
+      { label: "My AMS Dashboard", path: "/ams-dashboard" },
       { label: "AMS Tickets", path: "/ams" },
       { label: "Achievements", path: "/achievements" },
       { label: "Awards", path: "/awards" },
