@@ -80,7 +80,6 @@ import { Route as AuthenticatedRoleShowcaseIndexRouteImport } from './routes/_au
 import { Route as AuthenticatedRoleManagerIndexRouteImport } from './routes/_authenticated/role-manager.index'
 import { Route as AuthenticatedAwardsIndexRouteImport } from './routes/_authenticated/awards.index'
 import { Route as AuthenticatedAmsIndexRouteImport } from './routes/_authenticated/ams.index'
-import { Route as ApiPublicSeedAccountsRouteImport } from './routes/api/public/seed-accounts'
 import { Route as AuthenticatedRoleShowcaseSlugRouteImport } from './routes/_authenticated/role-showcase.$slug'
 import { Route as AuthenticatedRoleManagerSlugRouteImport } from './routes/_authenticated/role-manager.$slug'
 import { Route as AuthenticatedAwardsNewRouteImport } from './routes/_authenticated/awards.new'
@@ -486,11 +485,6 @@ const AuthenticatedAmsIndexRoute = AuthenticatedAmsIndexRouteImport.update({
   path: '/ams/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const ApiPublicSeedAccountsRoute = ApiPublicSeedAccountsRouteImport.update({
-  id: '/api/public/seed-accounts',
-  path: '/api/public/seed-accounts',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AuthenticatedRoleShowcaseSlugRoute =
   AuthenticatedRoleShowcaseSlugRouteImport.update({
     id: '/role-showcase/$slug',
@@ -678,7 +672,6 @@ export interface FileRoutesByFullPath {
   '/awards/new': typeof AuthenticatedAwardsNewRoute
   '/role-manager/$slug': typeof AuthenticatedRoleManagerSlugRoute
   '/role-showcase/$slug': typeof AuthenticatedRoleShowcaseSlugRoute
-  '/api/public/seed-accounts': typeof ApiPublicSeedAccountsRoute
   '/ams/': typeof AuthenticatedAmsIndexRoute
   '/awards/': typeof AuthenticatedAwardsIndexRoute
   '/role-manager/': typeof AuthenticatedRoleManagerIndexRoute
@@ -769,7 +762,6 @@ export interface FileRoutesByTo {
   '/awards/new': typeof AuthenticatedAwardsNewRoute
   '/role-manager/$slug': typeof AuthenticatedRoleManagerSlugRoute
   '/role-showcase/$slug': typeof AuthenticatedRoleShowcaseSlugRoute
-  '/api/public/seed-accounts': typeof ApiPublicSeedAccountsRoute
   '/ams': typeof AuthenticatedAmsIndexRoute
   '/awards': typeof AuthenticatedAwardsIndexRoute
   '/role-manager': typeof AuthenticatedRoleManagerIndexRoute
@@ -863,7 +855,6 @@ export interface FileRoutesById {
   '/_authenticated/awards/new': typeof AuthenticatedAwardsNewRoute
   '/_authenticated/role-manager/$slug': typeof AuthenticatedRoleManagerSlugRoute
   '/_authenticated/role-showcase/$slug': typeof AuthenticatedRoleShowcaseSlugRoute
-  '/api/public/seed-accounts': typeof ApiPublicSeedAccountsRoute
   '/_authenticated/ams/': typeof AuthenticatedAmsIndexRoute
   '/_authenticated/awards/': typeof AuthenticatedAwardsIndexRoute
   '/_authenticated/role-manager/': typeof AuthenticatedRoleManagerIndexRoute
@@ -957,7 +948,6 @@ export interface FileRouteTypes {
     | '/awards/new'
     | '/role-manager/$slug'
     | '/role-showcase/$slug'
-    | '/api/public/seed-accounts'
     | '/ams/'
     | '/awards/'
     | '/role-manager/'
@@ -1048,7 +1038,6 @@ export interface FileRouteTypes {
     | '/awards/new'
     | '/role-manager/$slug'
     | '/role-showcase/$slug'
-    | '/api/public/seed-accounts'
     | '/ams'
     | '/awards'
     | '/role-manager'
@@ -1141,7 +1130,6 @@ export interface FileRouteTypes {
     | '/_authenticated/awards/new'
     | '/_authenticated/role-manager/$slug'
     | '/_authenticated/role-showcase/$slug'
-    | '/api/public/seed-accounts'
     | '/_authenticated/ams/'
     | '/_authenticated/awards/'
     | '/_authenticated/role-manager/'
@@ -1176,7 +1164,6 @@ export interface RootRouteChildren {
   StarRoleRoute: typeof StarRoleRoute
   VerifyCodeRoute: typeof VerifyCodeRoute
   ApplyIndexRoute: typeof ApplyIndexRoute
-  ApiPublicSeedAccountsRoute: typeof ApiPublicSeedAccountsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1678,13 +1665,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAmsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/api/public/seed-accounts': {
-      id: '/api/public/seed-accounts'
-      path: '/api/public/seed-accounts'
-      fullPath: '/api/public/seed-accounts'
-      preLoaderRoute: typeof ApiPublicSeedAccountsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_authenticated/role-showcase/$slug': {
       id: '/_authenticated/role-showcase/$slug'
       path: '/role-showcase/$slug'
@@ -2024,7 +2004,6 @@ const rootRouteChildren: RootRouteChildren = {
   StarRoleRoute: StarRoleRoute,
   VerifyCodeRoute: VerifyCodeRoute,
   ApplyIndexRoute: ApplyIndexRoute,
-  ApiPublicSeedAccountsRoute: ApiPublicSeedAccountsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
