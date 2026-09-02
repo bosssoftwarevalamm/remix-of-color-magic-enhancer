@@ -16,6 +16,7 @@ import { Route as FinanceManagerRouteImport } from './routes/finance-manager'
 import { Route as ControlPanelRouteImport } from './routes/control-panel'
 import { Route as CockpitRouteImport } from './routes/cockpit'
 import { Route as AmsManagerRouteImport } from './routes/ams-manager'
+import { Route as AmsDashboardRouteImport } from './routes/ams-dashboard'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApplyIndexRouteImport } from './routes/apply.index'
@@ -132,6 +133,11 @@ const CockpitRoute = CockpitRouteImport.update({
 const AmsManagerRoute = AmsManagerRouteImport.update({
   id: '/ams-manager',
   path: '/ams-manager',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AmsDashboardRoute = AmsDashboardRouteImport.update({
+  id: '/ams-dashboard',
+  path: '/ams-dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
@@ -592,6 +598,7 @@ const AuthenticatedAwardsIdEditRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ams-dashboard': typeof AmsDashboardRoute
   '/ams-manager': typeof AmsManagerRoute
   '/cockpit': typeof CockpitRoute
   '/control-panel': typeof ControlPanelRoute
@@ -682,6 +689,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ams-dashboard': typeof AmsDashboardRoute
   '/ams-manager': typeof AmsManagerRoute
   '/cockpit': typeof CockpitRoute
   '/control-panel': typeof ControlPanelRoute
@@ -773,6 +781,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/ams-dashboard': typeof AmsDashboardRoute
   '/ams-manager': typeof AmsManagerRoute
   '/cockpit': typeof CockpitRoute
   '/control-panel': typeof ControlPanelRoute
@@ -865,6 +874,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ams-dashboard'
     | '/ams-manager'
     | '/cockpit'
     | '/control-panel'
@@ -955,6 +965,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/ams-dashboard'
     | '/ams-manager'
     | '/cockpit'
     | '/control-panel'
@@ -1045,6 +1056,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/ams-dashboard'
     | '/ams-manager'
     | '/cockpit'
     | '/control-panel'
@@ -1137,6 +1149,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AmsDashboardRoute: typeof AmsDashboardRoute
   AmsManagerRoute: typeof AmsManagerRoute
   CockpitRoute: typeof CockpitRoute
   ControlPanelRoute: typeof ControlPanelRoute
@@ -1202,6 +1215,13 @@ declare module '@tanstack/react-router' {
       path: '/ams-manager'
       fullPath: '/ams-manager'
       preLoaderRoute: typeof AmsManagerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ams-dashboard': {
+      id: '/ams-dashboard'
+      path: '/ams-dashboard'
+      fullPath: '/ams-dashboard'
+      preLoaderRoute: typeof AmsDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -1969,6 +1989,7 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AmsDashboardRoute: AmsDashboardRoute,
   AmsManagerRoute: AmsManagerRoute,
   CockpitRoute: CockpitRoute,
   ControlPanelRoute: ControlPanelRoute,
