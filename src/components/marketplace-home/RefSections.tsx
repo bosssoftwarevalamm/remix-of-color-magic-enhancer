@@ -309,11 +309,11 @@ export const FaqSection = () => {
           </button>
         ))}
       </div>
-      <div className="mx-6 max-w-6xl md:columns-2 md:gap-2">
+      <div className="mx-6 grid max-w-6xl items-start gap-2 md:grid-cols-2">
         {visible.map((f) => {
           const isOpen = open === f.id;
           return (
-            <button key={f.id} onClick={() => setOpen(isOpen ? null : f.id)} className={`mb-2 block h-fit w-full break-inside-avoid overflow-hidden rounded-xl border text-left transition-all ${isOpen ? "border-cyan-400/40 bg-cyan-500/[0.04]" : "border-white/[0.07] bg-white/[0.02] hover:border-white/15"}`}>
+            <button key={f.id} onClick={() => setOpen(isOpen ? null : f.id)} className={`h-fit w-full overflow-hidden rounded-xl border text-left transition-all ${isOpen ? "border-cyan-400/40 bg-cyan-500/[0.04]" : "border-white/[0.07] bg-white/[0.02] hover:border-white/15"}`}>
               <div className="flex items-center gap-3 px-4 py-3">
                 <HelpCircle className={`h-4 w-4 flex-shrink-0 ${isOpen ? "text-cyan-300" : "text-white/60"}`} />
                 <span className="flex-1 text-sm font-semibold text-white">{f.question}</span>
