@@ -291,9 +291,9 @@ export const FaqSection = () => {
   if (faqs.length === 0) return null;
 
   return (
-    <section className="py-10">
+    <section className="py-5">
       {sectionTitle("Frequently Asked Questions", undefined, `Everything about the ${LIFETIME_PRICE} lifetime licence, delivery, demos and partners`)}
-      <div className="mb-4 flex flex-wrap gap-2 px-6">
+      <div className="mb-3 flex flex-wrap gap-2 px-6">
         {["All", ...categories].map((c) => (
           <button
             key={c}
@@ -309,17 +309,17 @@ export const FaqSection = () => {
           </button>
         ))}
       </div>
-      <div className="mx-6 max-w-4xl space-y-2">
+      <div className="mx-6 grid max-w-6xl items-start gap-2 md:grid-cols-2">
         {visible.map((f) => {
           const isOpen = open === f.id;
           return (
-            <button key={f.id} onClick={() => setOpen(isOpen ? null : f.id)} className={`w-full overflow-hidden rounded-xl border text-left transition-all ${isOpen ? "border-cyan-400/40 bg-cyan-500/[0.04]" : "border-white/[0.07] bg-white/[0.02] hover:border-white/15"}`}>
-              <div className="flex items-center gap-3 px-5 py-4">
+            <button key={f.id} onClick={() => setOpen(isOpen ? null : f.id)} className={`h-fit w-full overflow-hidden rounded-xl border text-left transition-all ${isOpen ? "border-cyan-400/40 bg-cyan-500/[0.04]" : "border-white/[0.07] bg-white/[0.02] hover:border-white/15"}`}>
+              <div className="flex items-center gap-3 px-4 py-3">
                 <HelpCircle className={`h-4 w-4 flex-shrink-0 ${isOpen ? "text-cyan-300" : "text-white/60"}`} />
                 <span className="flex-1 text-sm font-semibold text-white">{f.question}</span>
                 <ChevronRight className={`h-4 w-4 text-white/60 transition-transform ${isOpen ? "rotate-90" : ""}`} />
               </div>
-              {isOpen && <p className="px-5 pb-4 pl-12 text-xs leading-relaxed text-white/70">{f.answer}</p>}
+              {isOpen && <p className="px-4 pb-3 pl-11 text-xs leading-relaxed text-white/70">{f.answer}</p>}
             </button>
           );
         })}
