@@ -309,7 +309,7 @@ export const FaqSection = () => {
           </button>
         ))}
       </div>
-      <div className="mx-6 grid max-w-6xl items-start gap-2 md:grid-cols-2">
+      <div className="mx-6 grid max-w-7xl items-start gap-2 md:grid-cols-2 lg:grid-cols-3">
         {visible.map((f) => {
           const isOpen = open === f.id;
           return (
