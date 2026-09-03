@@ -24,7 +24,7 @@ export function CategoryRow({
   };
 
   return (
-    <div id={title} className="group/row mb-12 scroll-mt-32">
+    <div id={title} className="group/row mb-6 scroll-mt-32">
       <div className="mb-4 flex items-center gap-3">
         <h3 className="text-xl font-bold text-white md:text-2xl">{title}</h3>
         <Badge className="border-cyan-500/30 bg-cyan-500/20 text-cyan-400">{count} Products</Badge>
@@ -50,7 +50,7 @@ export function CategoryRow({
 
       <div
         ref={ref}
-        className="sv-row-scroll flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-4"
+        className="sv-row-scroll flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-2"
       >
         {children}
       </div>
