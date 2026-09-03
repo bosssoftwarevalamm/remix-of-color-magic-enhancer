@@ -285,7 +285,7 @@ export const FaqSection = () => {
     [faqs],
   );
   const [activeCat, setActiveCat] = useState<string>("All");
-  const [open, setOpen] = useState<string | null>(faqs[0]?.id ?? null);
+  const [open, setOpen] = useState<string | null>(null);
 
   const visible = activeCat === "All" ? faqs : faqs.filter((f) => f.category === activeCat);
   if (faqs.length === 0) return null;
