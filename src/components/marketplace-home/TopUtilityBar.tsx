@@ -1266,6 +1266,7 @@ export function TopUtilityBar({ favoritesCount = 0 }: { favoritesCount?: number 
       <CalendarTool key="cal" t={t} />,
       <CalculatorTool key="calc" t={t} />,
       <LoginPill key="login" t={t} />,
+      <SuperAdminSwitch key="sa-switch" t={t} />,
       <DashboardsMenu key="dashboards" t={t} />,
       <CurrencyPicker key="cur" t={t} />,
       <Notifications key="notif" t={t} />,
