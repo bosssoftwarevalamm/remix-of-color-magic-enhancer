@@ -1043,6 +1043,164 @@ function LoginPill({ t }: { t: (s: string) => string }) {
 }
 
 /* ------------------------------------------------------------------ */
+/* Super Admin dashboard switch (key + license verified)               */
+/* ------------------------------------------------------------------ */
+
+function SuperAdminSwitch({ t }: { t: (s: string) => string }) {
+  const verify = useServerFn(verifySuperAdminSwitch);
+  const [unlocked, setUnlocked] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [licenseKey, setLicenseKey] = useState("");
+  const [backupKey, setBackupKey] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [q, setQ] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.sessionStorage.getItem(SWITCH_STORAGE_KEY) === "1") {
+      setUnlocked(true);
+    }
+  }, []);
+
+  const submit = async () => {
+    setBusy(true);
+    try {
+      const res = await verify({ data: { email, password, licenseKey, backupKey } });
+      if (res.ok) {
+        window.sessionStorage.setItem(SWITCH_STORAGE_KEY, "1");
+        setUnlocked(true);
+        setPassword("");
+        toast.success("Super Admin switch unlocked");
+      } else {
+        toast.error(res.reason);
+      }
+    } catch {
+      toast.error("Verification failed");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const groups = useMemo(() => {
+    const needle = q.trim().toLowerCase();
+    if (!needle) return SWITCH_GROUPS;
+    return SWITCH_GROUPS.map((g) => ({
+      ...g,
+      items: g.items.filter((i) => i.label.toLowerCase().includes(needle)),
+    })).filter((g) => g.items.length > 0);
+  }, [q]);
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger className={TRIGGER}>
+        <Lock className="h-3.5 w-3.5 text-amber-300 transition-transform duration-300 group-hover:-translate-y-0.5" />
+        <span className="hidden sm:inline">{t("Switch Dashboard")}</span>
+        <span className="text-[9px] opacity-70">▼</span>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
+        align="end"
+        className="kr-panel max-h-[70vh] w-80 overflow-y-auto border-white/10 bg-[#0b1a30]/95 text-white backdrop-blur-xl"
+      >
+        <DropdownMenuLabel className="text-[11px] uppercase tracking-wider text-white/50">
+          {t("Super Admin switch")}
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator className="bg-white/10" />
+
+        {!unlocked ? (
+          <div className="space-y-2 p-3" onKeyDown={(e) => e.stopPropagation()}>
+            <Input
+              placeholder="Username / email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="h-9 border-white/15 bg-white/5 text-[12.5px] text-white placeholder:text-white/40"
+            />
+            <Input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="h-9 border-white/15 bg-white/5 text-[12.5px] text-white placeholder:text-white/40"
+            />
+            <Input
+              placeholder="12-digit license key"
+              value={licenseKey}
+              onChange={(e) => setLicenseKey(e.target.value)}
+              className="h-9 border-white/15 bg-white/5 text-[12.5px] text-white placeholder:text-white/40"
+            />
+            <Input
+              placeholder="Backup key"
+              value={backupKey}
+              onChange={(e) => setBackupKey(e.target.value)}
+              className="h-9 border-white/15 bg-white/5 text-[12.5px] text-white placeholder:text-white/40"
+            />
+            <Button
+              className="w-full"
+              disabled={busy || !email || !password || !licenseKey || !backupKey}
+              onClick={submit}
+            >
+              {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : t("Verify & unlock")}
+            </Button>
+          </div>
+        ) : (
+          <>
+            <div className="p-2" onKeyDown={(e) => e.stopPropagation()}>
+              <Input
+                placeholder="Search dashboards…"
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                className="h-8 border-white/15 bg-white/5 text-[12.5px] text-white placeholder:text-white/40"
+              />
+            </div>
+            {groups.map((g) => (
+              <div key={g.group}>
+                <DropdownMenuLabel className="text-[10px] uppercase tracking-wider text-white/40">
+                  {g.group}
+                </DropdownMenuLabel>
+                {g.items.map((item) => (
+                  <DropdownMenuItem
+                    key={`${g.group}-${item.label}`}
+                    asChild
+                    className="kr-item cursor-pointer focus:bg-white/10"
+                  >
+                    {item.kind === "module" ? (
+                      <Link to="/m/$module" params={{ module: item.id }}>
+                        <span className="text-[12.5px]">{item.label}</span>
+                      </Link>
+                    ) : item.kind === "star" ? (
+                      <Link to="/star/$role" params={{ role: item.id }}>
+                        <span className="text-[12.5px]">{item.label}</span>
+                      </Link>
+                    ) : (
+                      <Link to={item.path as never}>
+                        <span className="text-[12.5px]">{item.label}</span>
+                      </Link>
+                    )}
+                  </DropdownMenuItem>
+                ))}
+              </div>
+            ))}
+            <DropdownMenuSeparator className="bg-white/10" />
+            <div className="p-2">
+              <Button
+                variant="secondary"
+                className="w-full"
+                onClick={() => {
+                  window.sessionStorage.removeItem(SWITCH_STORAGE_KEY);
+                  setUnlocked(false);
+                }}
+              >
+                Lock switch
+              </Button>
+            </div>
+          </>
+        )}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+
+/* ------------------------------------------------------------------ */
 /* Bar                                                                 */
 /* ------------------------------------------------------------------ */
 
