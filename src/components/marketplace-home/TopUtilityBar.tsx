@@ -1048,6 +1048,73 @@ function LoginPill({ t }: { t: (s: string) => string }) {
 /* Super Admin dashboard switch (key + license verified)               */
 /* ------------------------------------------------------------------ */
 
+function targetHref(tg: SwitchTarget) {
+  return tg.kind === "module" ? `/m/${tg.id}` : tg.kind === "star" ? `/star/${tg.id}` : tg.path;
+}
+
+function AiDashboardFinder() {
+  const ask = useServerFn(suggestDashboard);
+  const navigate = useNavigate();
+  const [need, setNeed] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const [results, setResults] = useState<AiSuggestion[]>([]);
+
+  const run = async () => {
+    if (need.trim().length < 2 || busy) return;
+    setBusy(true);
+    setError("");
+    setResults([]);
+    try {
+      const res = await ask({ data: { need } });
+      if (res.ok) setResults(res.suggestions);
+      else setError(res.reason);
+    } catch {
+      setError("AI suggestion failed. Please try again.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className="space-y-2 p-2" onKeyDown={(e) => e.stopPropagation()}>
+      <div className="text-[10px] uppercase tracking-wider text-white/40">AI dashboard finder</div>
+      <textarea
+        value={need}
+        onChange={(e) => setNeed(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            run();
+          }
+        }}
+        rows={2}
+        placeholder="अपनी ज़रूरत लिखें… e.g. reseller payouts check karna hai"
+        className="w-full resize-none rounded-md border border-white/15 bg-white/5 p-2 text-[12.5px] text-white placeholder:text-white/40 focus:outline-none"
+      />
+      <Button className="h-8 w-full" disabled={busy || need.trim().length < 2} onClick={run}>
+        {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : "Suggest dashboard"}
+      </Button>
+      {error && <p className="text-[11.5px] text-red-300">{error}</p>}
+      {results.map((r, i) => (
+        <button
+          key={`${r.target.label}-${i}`}
+          type="button"
+          onClick={() => navigate({ to: targetHref(r.target) as never })}
+          className="kr-item block w-full rounded-md border border-white/10 bg-white/5 p-2 text-left hover:bg-white/10"
+        >
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-[12.5px] font-semibold">{r.target.label}</span>
+            <span className="text-[10px] text-amber-300">Open →</span>
+          </div>
+          <div className="text-[10.5px] text-white/50">{r.group} · {targetHref(r.target)}</div>
+          {r.reason && <div className="mt-1 text-[11.5px] text-white/70">{r.reason}</div>}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 function SuperAdminSwitch({ t }: { t: (s: string) => string }) {
   const verify = useServerFn(verifySuperAdminSwitch);
   const [unlocked, setUnlocked] = useState(false);
@@ -1145,6 +1212,7 @@ function SuperAdminSwitch({ t }: { t: (s: string) => string }) {
           </div>
         ) : (
           <>
+            <AiDashboardFinder />
             <div className="p-2" onKeyDown={(e) => e.stopPropagation()}>
               <Input
                 placeholder="Search dashboards…"
