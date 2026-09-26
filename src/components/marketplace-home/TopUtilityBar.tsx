@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { listNotifications, markAllRead, subscribe as subscribeApps } from "@/lib/applications/store";
 import {
   Popover,
@@ -53,7 +53,8 @@ import {
   translateTexts,
 } from "@/lib/topbar/utility.functions";
 import { verifySuperAdminSwitch } from "@/lib/super-admin/switch.functions";
-import { SWITCH_GROUPS, SWITCH_STORAGE_KEY } from "@/lib/super-admin/role-dashboards";
+import { SWITCH_GROUPS, SWITCH_STORAGE_KEY, type SwitchTarget } from "@/lib/super-admin/role-dashboards";
+import { suggestDashboard, type AiSuggestion } from "@/lib/super-admin/ai-suggest.functions";
 
 /* ------------------------------------------------------------------ */
 /* shared shell                                                        */
