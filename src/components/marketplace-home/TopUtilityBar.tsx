@@ -53,7 +53,7 @@ import {
   translateTexts,
 } from "@/lib/topbar/utility.functions";
 import { verifySuperAdminSwitch } from "@/lib/super-admin/switch.functions";
-import { SWITCH_GROUPS, SWITCH_STORAGE_KEY, type SwitchTarget } from "@/lib/super-admin/role-dashboards";
+import { SWITCH_GROUPS, SWITCH_STORAGE_KEY, SWITCH_LICENSE_KEY, SWITCH_BACKUP_KEY, type SwitchTarget } from "@/lib/super-admin/role-dashboards";
 import { suggestDashboard, type AiSuggestion } from "@/lib/super-admin/ai-suggest.functions";
 
 /* ------------------------------------------------------------------ */
@@ -1140,6 +1140,8 @@ function SuperAdminSwitch({ t }: { t: (s: string) => string }) {
       const res = await verify({ data: { email, password, licenseKey, backupKey } });
       if (res.ok) {
         window.sessionStorage.setItem(SWITCH_STORAGE_KEY, "1");
+        window.sessionStorage.setItem(SWITCH_LICENSE_KEY, licenseKey);
+        window.sessionStorage.setItem(SWITCH_BACKUP_KEY, backupKey);
         setUnlocked(true);
         setPassword("");
         toast.success("Super Admin switch unlocked");
@@ -1259,6 +1261,8 @@ function SuperAdminSwitch({ t }: { t: (s: string) => string }) {
                 className="w-full"
                 onClick={() => {
                   window.sessionStorage.removeItem(SWITCH_STORAGE_KEY);
+                  window.sessionStorage.removeItem(SWITCH_LICENSE_KEY);
+                  window.sessionStorage.removeItem(SWITCH_BACKUP_KEY);
                   setUnlocked(false);
                 }}
               >
