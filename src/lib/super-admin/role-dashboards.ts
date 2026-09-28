@@ -142,3 +142,5 @@ export const SWITCH_GROUPS: SwitchGroup[] = [
 ];
 
 export const SWITCH_STORAGE_KEY = "sv_super_admin_switch";
+export const SWITCH_LICENSE_KEY = "sv_super_admin_license";
+export const SWITCH_BACKUP_KEY = "sv_super_admin_backup";
