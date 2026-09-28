@@ -1067,7 +1067,9 @@ function AiDashboardFinder() {
     setError("");
     setResults([]);
     try {
-      const res = await ask({ data: { need } });
+      const licenseKey = window.sessionStorage.getItem(SWITCH_LICENSE_KEY) ?? "";
+      const backupKey = window.sessionStorage.getItem(SWITCH_BACKUP_KEY) ?? "";
+      const res = await ask({ data: { need, licenseKey, backupKey } });
       if (res.ok) setResults(res.suggestions);
       else setError(res.reason);
     } catch {
