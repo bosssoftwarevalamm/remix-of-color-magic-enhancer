@@ -9,9 +9,27 @@ export type AiSuggestResult =
 
 const CATALOG = SWITCH_GROUPS.flatMap((g) => g.items.map((item) => ({ group: g.group, item })));
 
+const normKey = (v: string) => v.replace(/[\s-]/g, "");
+
 export const suggestDashboard = createServerFn({ method: "POST" })
-  .inputValidator((d) => z.object({ need: z.string().trim().min(2).max(1000) }).parse(d))
+  .inputValidator((d) =>
+    z
+      .object({
+        need: z.string().trim().min(2).max(1000),
+        licenseKey: z.string().min(1),
+        backupKey: z.string().min(1),
+      })
+      .parse(d),
+  )
   .handler(async ({ data }): Promise<AiSuggestResult> => {
+    // Server-side Super Admin key gate — wrong license/backup key blocks the AI call.
+    const expectedLicense = process.env["SUPER_ADMIN_LICENSE_KEY"] ?? "2345-3456-4567";
+    const expectedBackup = process.env["SUPER_ADMIN_BACKUP_KEY"] ?? "5678-2345-3456";
+    if (normKey(data.licenseKey) !== normKey(expectedLicense))
+      return { ok: false, reason: "Invalid license key — access blocked." };
+    if (normKey(data.backupKey) !== normKey(expectedBackup))
+      return { ok: false, reason: "Invalid backup key — access blocked." };
+
     const apiKey = process.env.LOVABLE_API_KEY;
     if (!apiKey) return { ok: false, reason: "AI is not configured." };
 
