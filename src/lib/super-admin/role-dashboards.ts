@@ -12,6 +12,9 @@ export type SwitchTarget =
 
 export type SwitchGroup = { group: string; items: SwitchTarget[] };
 
+/** Stable key used to store editable details per dashboard. */
+export const targetKey = (t: SwitchTarget) => (t.kind === "path" ? `path:${t.path}` : `${t.kind}:${t.id}`);
+
 const mod = (label: string, id: string): SwitchTarget => ({ label, kind: "module", id });
 const star = (label: string, id: string): SwitchTarget => ({ label, kind: "star", id });
 const path = (label: string, p: string): SwitchTarget => ({ label, kind: "path", path: p });
