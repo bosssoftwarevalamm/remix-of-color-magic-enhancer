@@ -21,6 +21,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApplyIndexRouteImport } from './routes/apply.index'
 import { Route as VerifyCodeRouteImport } from './routes/verify.$code'
+import { Route as SuperAdminDashboardsRouteImport } from './routes/super-admin.dashboards'
 import { Route as StarRoleRouteImport } from './routes/star.$role'
 import { Route as MModuleRouteImport } from './routes/m.$module'
 import { Route as DashboardRoleRouteImport } from './routes/dashboard.$role'
@@ -157,6 +158,11 @@ const ApplyIndexRoute = ApplyIndexRouteImport.update({
 const VerifyCodeRoute = VerifyCodeRouteImport.update({
   id: '/verify/$code',
   path: '/verify/$code',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SuperAdminDashboardsRoute = SuperAdminDashboardsRouteImport.update({
+  id: '/super-admin/dashboards',
+  path: '/super-admin/dashboards',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StarRoleRoute = StarRoleRouteImport.update({
@@ -661,6 +667,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/$role': typeof DashboardRoleRoute
   '/m/$module': typeof MModuleRoute
   '/star/$role': typeof StarRoleRoute
+  '/super-admin/dashboards': typeof SuperAdminDashboardsRoute
   '/verify/$code': typeof VerifyCodeRoute
   '/apply/': typeof ApplyIndexRoute
   '/ams/$id': typeof AuthenticatedAmsIdRoute
@@ -751,6 +758,7 @@ export interface FileRoutesByTo {
   '/dashboard/$role': typeof DashboardRoleRoute
   '/m/$module': typeof MModuleRoute
   '/star/$role': typeof StarRoleRoute
+  '/super-admin/dashboards': typeof SuperAdminDashboardsRoute
   '/verify/$code': typeof VerifyCodeRoute
   '/apply': typeof ApplyIndexRoute
   '/ams/$id': typeof AuthenticatedAmsIdRoute
@@ -844,6 +852,7 @@ export interface FileRoutesById {
   '/dashboard/$role': typeof DashboardRoleRoute
   '/m/$module': typeof MModuleRoute
   '/star/$role': typeof StarRoleRoute
+  '/super-admin/dashboards': typeof SuperAdminDashboardsRoute
   '/verify/$code': typeof VerifyCodeRoute
   '/apply/': typeof ApplyIndexRoute
   '/_authenticated/ams/$id': typeof AuthenticatedAmsIdRoute
@@ -937,6 +946,7 @@ export interface FileRouteTypes {
     | '/dashboard/$role'
     | '/m/$module'
     | '/star/$role'
+    | '/super-admin/dashboards'
     | '/verify/$code'
     | '/apply/'
     | '/ams/$id'
@@ -1027,6 +1037,7 @@ export interface FileRouteTypes {
     | '/dashboard/$role'
     | '/m/$module'
     | '/star/$role'
+    | '/super-admin/dashboards'
     | '/verify/$code'
     | '/apply'
     | '/ams/$id'
@@ -1119,6 +1130,7 @@ export interface FileRouteTypes {
     | '/dashboard/$role'
     | '/m/$module'
     | '/star/$role'
+    | '/super-admin/dashboards'
     | '/verify/$code'
     | '/apply/'
     | '/_authenticated/ams/$id'
@@ -1162,6 +1174,7 @@ export interface RootRouteChildren {
   DashboardRoleRoute: typeof DashboardRoleRoute
   MModuleRoute: typeof MModuleRoute
   StarRoleRoute: typeof StarRoleRoute
+  SuperAdminDashboardsRoute: typeof SuperAdminDashboardsRoute
   VerifyCodeRoute: typeof VerifyCodeRoute
   ApplyIndexRoute: typeof ApplyIndexRoute
 }
@@ -1250,6 +1263,13 @@ declare module '@tanstack/react-router' {
       path: '/verify/$code'
       fullPath: '/verify/$code'
       preLoaderRoute: typeof VerifyCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/super-admin/dashboards': {
+      id: '/super-admin/dashboards'
+      path: '/super-admin/dashboards'
+      fullPath: '/super-admin/dashboards'
+      preLoaderRoute: typeof SuperAdminDashboardsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/star/$role': {
@@ -2002,6 +2022,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoleRoute: DashboardRoleRoute,
   MModuleRoute: MModuleRoute,
   StarRoleRoute: StarRoleRoute,
+  SuperAdminDashboardsRoute: SuperAdminDashboardsRoute,
   VerifyCodeRoute: VerifyCodeRoute,
   ApplyIndexRoute: ApplyIndexRoute,
 }
