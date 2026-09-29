@@ -14,6 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      dashboard_details: {
+        Row: {
+          ai_reason: string
+          description: string
+          target_key: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          ai_reason?: string
+          description?: string
+          target_key: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          ai_reason?: string
+          description?: string
+          target_key?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       finance_activity_heat: {
         Row: {
           activity_date: string
