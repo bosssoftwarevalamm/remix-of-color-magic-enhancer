@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import { SWITCH_GROUPS, type SwitchTarget } from "./role-dashboards";
+import { SWITCH_GROUPS, targetKey, type SwitchTarget } from "./role-dashboards";
+import { loadDetailsMap } from "./dashboard-details.functions";
 
 export type AiSuggestion = { target: SwitchTarget; group: string; reason: string };
 export type AiSuggestResult =
@@ -33,7 +34,12 @@ export const suggestDashboard = createServerFn({ method: "POST" })
     const apiKey = process.env.LOVABLE_API_KEY;
     if (!apiKey) return { ok: false, reason: "AI is not configured." };
 
-    const list = CATALOG.map((c, i) => `${i}. ${c.item.label} [${c.group}]`).join("\n");
+    const details = await loadDetailsMap();
+    const detailOf = (t: SwitchTarget) => details[targetKey(t)];
+    const list = CATALOG.map((c, i) => {
+      const d = detailOf(c.item);
+      return `${i}. ${d?.title || c.item.label} [${c.group}]${d?.description ? ` — ${d.description}` : ""}`;
+    }).join("\n");
     const instructions = `You route a Super Admin to the best dashboard in a software platform.
 Available dashboards (index. label [group]):
 ${list}
@@ -109,7 +115,15 @@ Reply ONLY with JSON: {"picks":[{"index":number,"reason":"one short sentence in 
     const suggestions = picks
       .filter((p) => Number.isInteger(p.index) && CATALOG[p.index])
       .slice(0, 3)
-      .map((p) => ({ target: CATALOG[p.index].item, group: CATALOG[p.index].group, reason: String(p.reason ?? "") }));
+      .map((p) => {
+        const c = CATALOG[p.index];
+        const d = detailOf(c.item);
+        return {
+          target: d?.title ? { ...c.item, label: d.title } : c.item,
+          group: c.group,
+          reason: d?.ai_reason || String(p.reason ?? ""),
+        };
+      });
     if (!suggestions.length) return { ok: false, reason: "No matching dashboard found — try describing it differently." };
     return { ok: true, suggestions };
   });
