@@ -4,3 +4,5 @@
 - [x] Super Admin switch: correct keys unlock, switch to Author dashboard works
 - [x] All 11 Star dashboards open via sidebar and via Super Admin dropdown
 - [x] Error shown if a dashboard fails to open
+- [x] Dashboard Details link in the Super Admin switch dropdown (top bar) → /super-admin/dashboards
+- [x] AI finder auto-refreshes suggestions when dashboard details are saved (no stale titles/descriptions)

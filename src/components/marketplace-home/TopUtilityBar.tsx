@@ -53,7 +53,7 @@ import {
   translateTexts,
 } from "@/lib/topbar/utility.functions";
 import { verifySuperAdminSwitch } from "@/lib/super-admin/switch.functions";
-import { SWITCH_GROUPS, SWITCH_STORAGE_KEY, SWITCH_LICENSE_KEY, SWITCH_BACKUP_KEY, type SwitchTarget } from "@/lib/super-admin/role-dashboards";
+import { SWITCH_GROUPS, SWITCH_STORAGE_KEY, SWITCH_LICENSE_KEY, SWITCH_BACKUP_KEY, DASHBOARD_DETAILS_UPDATED_EVENT, type SwitchTarget } from "@/lib/super-admin/role-dashboards";
 import { suggestDashboard, type AiSuggestion } from "@/lib/super-admin/ai-suggest.functions";
 
 /* ------------------------------------------------------------------ */
@@ -1060,9 +1060,12 @@ function AiDashboardFinder() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [results, setResults] = useState<AiSuggestion[]>([]);
+  const lastNeed = useRef("");
+  const runRef = useRef<() => void>(() => {});
 
   const run = async () => {
     if (need.trim().length < 2 || busy) return;
+    lastNeed.current = need;
     setBusy(true);
     setError("");
     setResults([]);
@@ -1078,6 +1081,20 @@ function AiDashboardFinder() {
       setBusy(false);
     }
   };
+
+  // Keep the latest run reachable from the listener below.
+  useEffect(() => {
+    runRef.current = run;
+  });
+
+  // Dashboard details saved elsewhere → refresh suggestions so old titles/descriptions never linger.
+  useEffect(() => {
+    const onDetailsUpdated = () => {
+      if (lastNeed.current.trim().length >= 2) runRef.current();
+    };
+    window.addEventListener(DASHBOARD_DETAILS_UPDATED_EVENT, onDetailsUpdated);
+    return () => window.removeEventListener(DASHBOARD_DETAILS_UPDATED_EVENT, onDetailsUpdated);
+  }, []);
 
   return (
     <div className="space-y-2 p-2" onKeyDown={(e) => e.stopPropagation()}>
@@ -1217,6 +1234,19 @@ function SuperAdminSwitch({ t }: { t: (s: string) => string }) {
           </div>
         ) : (
           <>
+            <DropdownMenuItem
+              asChild
+              className="kr-item cursor-pointer focus:bg-white/10"
+            >
+              <Link to="/super-admin/dashboards" className="flex items-center gap-2">
+                <LayoutDashboard className="h-3.5 w-3.5 text-cyan-300" />
+                <span className="flex w-full flex-col">
+                  <span className="text-[12.5px] font-semibold">Dashboard Details</span>
+                  <span className="text-[10.5px] text-white/50">Edit titles, descriptions & AI reasons</span>
+                </span>
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator className="bg-white/10" />
             <AiDashboardFinder />
             <div className="p-2" onKeyDown={(e) => e.stopPropagation()}>
               <Input
