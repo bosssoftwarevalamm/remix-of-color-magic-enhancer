@@ -6,6 +6,7 @@ import {
   SWITCH_GROUPS,
   SWITCH_BACKUP_KEY,
   SWITCH_LICENSE_KEY,
+  DASHBOARD_DETAILS_UPDATED_EVENT,
   targetKey,
   type SwitchTarget,
 } from "@/lib/super-admin/role-dashboards";
@@ -83,11 +84,13 @@ function DashboardDetailsPage() {
       const r = await save({ data: { ...keys, targetKey: targetKey(selected), ...form } });
       if (!r.ok) return toast.error(r.reason);
       const k = targetKey(selected);
-      setDetails((p) => ({
-        ...p,
-        [k]: { target_key: k, title: form.title.trim(), description: form.description.trim(), ai_reason: form.aiReason.trim(), updated_at: new Date().toISOString() },
-      }));
-      toast.success("Dashboard details saved");
+        setDetails((p) => ({
+          ...p,
+          [k]: { target_key: k, title: form.title.trim(), description: form.description.trim(), ai_reason: form.aiReason.trim(), updated_at: new Date().toISOString() },
+        }));
+        // Tell any open AI dashboard finder to refresh with the new details.
+        window.dispatchEvent(new Event(DASHBOARD_DETAILS_UPDATED_EVENT));
+        toast.success("Dashboard details saved");
     } catch {
       toast.error("Could not save — please try again.");
     } finally {
