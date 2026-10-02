@@ -6,3 +6,4 @@
 - [x] Error shown if a dashboard fails to open
 - [x] Dashboard Details link in the Super Admin switch dropdown (top bar) → /super-admin/dashboards
 - [x] AI finder auto-refreshes suggestions when dashboard details are saved (no stale titles/descriptions)
+- [ ] Test Dashboard Details page flow in browser: save, reload persistence, wrong/missing key block
