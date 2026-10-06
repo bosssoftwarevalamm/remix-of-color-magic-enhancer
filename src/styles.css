@@ -90,6 +90,10 @@
 }
 
 :root {
+  --share-surface: oklch(0.265 0.075 250);
+  --share-text: oklch(0.98 0.01 230);
+  --share-rim: oklch(0.84 0.14 204 / 0.34);
+  --share-highlight: oklch(0.36 0.075 250);
   --radius: 1rem;
 
   --background: oklch(0.16 0.02 285);
