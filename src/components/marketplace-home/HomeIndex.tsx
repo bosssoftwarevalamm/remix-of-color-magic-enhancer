@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
 import { motion } from "framer-motion";
 import { toast } from "sonner";
@@ -31,6 +31,7 @@ import {
 import { extraDemos, allMasterCategories55 } from "@/data/extraDemos";
 import { buildRow } from "@/data/rowFill";
 import CategoryRow from "@/components/marketplace-home/CategoryRow";
+import { ProductShare } from "@/components/marketplace-home/ProductShare";
 import { LIFETIME_DISCOUNT, LIFETIME_MRP, LIFETIME_PRICE, SITE_STATS } from "@/lib/site-content/constants";
 
 interface Demo {
@@ -3348,6 +3349,11 @@ const allDemos: Demo[] = [
 const masterCategories = ["All", ...allMasterCategories55];
 
 const Index = () => {
+  useEffect(() => {
+    if (!window.location.hash.startsWith("#product-")) return;
+    const element = document.getElementById(window.location.hash.slice(1));
+    element?.scrollIntoView({ block: "center", inline: "center" });
+  }, []);
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [favorites, setFavorites] = useState<string[]>([]);
@@ -3520,7 +3526,7 @@ const DemoCard = memo(({ demo, index, isFavorite, onToggleFavorite }: {
   const [activeTab, setActiveTab] = useState<'features' | 'tech'>('features');
 
   return (
-    <div className="sv-card-shell relative">
+    <div id={`product-${encodeURIComponent(demo.id)}`} className="sv-card-shell relative">
       <Card className="sv-card group h-full overflow-hidden border-cyan-500/20 bg-gradient-to-br from-[#1a2d4a] to-[#0d1e36]">
         <CardContent className="p-0 flex flex-col h-full">
           {/* Header with gradient */}
@@ -3641,7 +3647,7 @@ const DemoCard = memo(({ demo, index, isFavorite, onToggleFavorite }: {
             </div>
 
             {/* Enhanced Actions */}
-            <div className="flex gap-2 mt-auto">
+            <div className="sv-product-actions flex gap-2 mt-auto">
               {demo.status === "ACTIVE" ? (
                 <>
                   <a href={demo.url} className="flex-1">
@@ -3672,6 +3678,7 @@ const DemoCard = memo(({ demo, index, isFavorite, onToggleFavorite }: {
                   </Button>
                 </>
               )}
+              <ProductShare name={demo.name} description={demo.description} url={demo.url} id={demo.id} />
             </div>
             
             {/* Quick Stats on hover */}
