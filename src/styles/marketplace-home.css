@@ -230,6 +230,33 @@
 /* ================================================================== */
 /* Premium button system                                              */
 /* ================================================================== */
+.mpc-home .sv-product-actions > a { min-width: 0; }
+.mpc-home .sv-product-actions .sv-btn {
+  padding-inline: 8px;
+  gap: 5px;
+  font-size: 12px;
+  letter-spacing: 0;
+}
+.mpc-home .sv-product-actions .sv-btn svg { margin-right: 0; width: 14px; height: 14px; }
+.mpc-home .sv-product-actions .sv-product-share {
+  width: 38px;
+  min-width: 38px;
+  flex: 0 0 38px;
+  padding: 0;
+}
+.sv-share-menu {
+  --share-surface: oklch(0.265 0.075 250);
+  --share-text: oklch(0.98 0.01 230);
+  --share-rim: oklch(0.84 0.14 204 / 0.34);
+  --share-highlight: oklch(0.36 0.075 250);
+  background: var(--share-surface);
+  color: var(--share-text);
+  border-color: var(--share-rim);
+}
+.sv-share-menu [role="menuitem"] { min-height: 36px; cursor: pointer; }
+.sv-share-menu [role="menuitem"]:focus { background: var(--share-highlight); color: var(--share-text); }
+.sv-share-menu [role="separator"] { background: var(--share-rim); }
+
 .mpc-home .sv-btn,
 .mpc-home a > .sv-btn {
   position: relative;

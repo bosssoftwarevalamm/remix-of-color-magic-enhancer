@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Marketplace product sharing uses one shared ProductShare menu in the common card renderer; Instagram uses native sharing or clipboard fallback because it has no web share endpoint.
