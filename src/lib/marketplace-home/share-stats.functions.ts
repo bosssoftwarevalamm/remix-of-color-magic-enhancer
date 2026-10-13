@@ -43,11 +43,11 @@ export const getShareStats = createServerFn({ method: "POST" })
     const { data: rows, error } = await (supabaseAdmin as any)
       .from("product_share_events").select("product_id, product_name, platform").limit(50000);
     if (error) return { ok: false, reason: error.message };
-    const plat: Record<string, number> = Object.fromEntries(SHARE_PLATFORMS.map((p) => [p, 0]));
+    const plat: Record<string, number> = Object.fromEntries(SHARE_PLATFORMS.map((p) => [p, 0])) as Record<string, number>;
     const prod = new Map<string, ShareStats["byProduct"][number]>();
     for (const r of rows ?? []) {
       plat[r.platform] = (plat[r.platform] ?? 0) + 1;
-      const p = prod.get(r.product_id) ?? { productId: r.product_id, productName: r.product_name, count: 0, platforms: {} };
+      const p = prod.get(r.product_id) ?? { productId: r.product_id, productName: r.product_name, count: 0, platforms: {} as Record<string, number> };
       p.count++;
       p.platforms[r.platform] = (p.platforms[r.platform] ?? 0) + 1;
       prod.set(r.product_id, p);
