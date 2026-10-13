@@ -74,6 +74,7 @@ import { Route as ApplyIndexRouteImport } from './routes/apply.index'
 import { Route as ApplyRoleRouteImport } from './routes/apply.$role'
 import { Route as DashboardRoleRouteImport } from './routes/dashboard.$role'
 import { Route as MModuleRouteImport } from './routes/m.$module'
+import { Route as ProductIdRouteImport } from './routes/product.$id'
 import { Route as StarRoleRouteImport } from './routes/star.$role'
 import { Route as SuperAdminDashboardsRouteImport } from './routes/super-admin.dashboards'
 import { Route as VerifyCodeRouteImport } from './routes/verify.$code'
@@ -453,6 +454,11 @@ const MModuleRoute = MModuleRouteImport.update({
   path: '/m/$module',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProductIdRoute = ProductIdRouteImport.update({
+  id: '/product/$id',
+  path: '/product/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StarRoleRoute = StarRoleRouteImport.update({
   id: '/star/$role',
   path: '/star/$role',
@@ -666,6 +672,7 @@ export interface FileRoutesByFullPath {
   '/apply/$role': typeof ApplyRoleRoute
   '/dashboard/$role': typeof DashboardRoleRoute
   '/m/$module': typeof MModuleRoute
+  '/product/$id': typeof ProductIdRoute
   '/star/$role': typeof StarRoleRoute
   '/super-admin/dashboards': typeof SuperAdminDashboardsRoute
   '/verify/$code': typeof VerifyCodeRoute
@@ -757,6 +764,7 @@ export interface FileRoutesByTo {
   '/apply/$role': typeof ApplyRoleRoute
   '/dashboard/$role': typeof DashboardRoleRoute
   '/m/$module': typeof MModuleRoute
+  '/product/$id': typeof ProductIdRoute
   '/star/$role': typeof StarRoleRoute
   '/super-admin/dashboards': typeof SuperAdminDashboardsRoute
   '/verify/$code': typeof VerifyCodeRoute
@@ -851,6 +859,7 @@ export interface FileRoutesById {
   '/apply/$role': typeof ApplyRoleRoute
   '/dashboard/$role': typeof DashboardRoleRoute
   '/m/$module': typeof MModuleRoute
+  '/product/$id': typeof ProductIdRoute
   '/star/$role': typeof StarRoleRoute
   '/super-admin/dashboards': typeof SuperAdminDashboardsRoute
   '/verify/$code': typeof VerifyCodeRoute
@@ -945,6 +954,7 @@ export interface FileRouteTypes {
     | '/apply/$role'
     | '/dashboard/$role'
     | '/m/$module'
+    | '/product/$id'
     | '/star/$role'
     | '/super-admin/dashboards'
     | '/verify/$code'
@@ -1036,6 +1046,7 @@ export interface FileRouteTypes {
     | '/apply/$role'
     | '/dashboard/$role'
     | '/m/$module'
+    | '/product/$id'
     | '/star/$role'
     | '/super-admin/dashboards'
     | '/verify/$code'
@@ -1129,6 +1140,7 @@ export interface FileRouteTypes {
     | '/apply/$role'
     | '/dashboard/$role'
     | '/m/$module'
+    | '/product/$id'
     | '/star/$role'
     | '/super-admin/dashboards'
     | '/verify/$code'
@@ -1173,6 +1185,7 @@ export interface RootRouteChildren {
   ApplyRoleRoute: typeof ApplyRoleRoute
   DashboardRoleRoute: typeof DashboardRoleRoute
   MModuleRoute: typeof MModuleRoute
+  ProductIdRoute: typeof ProductIdRoute
   StarRoleRoute: typeof StarRoleRoute
   SuperAdminDashboardsRoute: typeof SuperAdminDashboardsRoute
   VerifyCodeRoute: typeof VerifyCodeRoute
@@ -1636,6 +1649,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MModuleRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/product/$id': {
+      id: '/product/$id'
+      path: '/product/$id'
+      fullPath: '/product/$id'
+      preLoaderRoute: typeof ProductIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/star/$role': {
       id: '/star/$role'
       path: '/star/$role'
@@ -2021,6 +2041,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApplyRoleRoute: ApplyRoleRoute,
   DashboardRoleRoute: DashboardRoleRoute,
   MModuleRoute: MModuleRoute,
+  ProductIdRoute: ProductIdRoute,
   StarRoleRoute: StarRoleRoute,
   SuperAdminDashboardsRoute: SuperAdminDashboardsRoute,
   VerifyCodeRoute: VerifyCodeRoute,
