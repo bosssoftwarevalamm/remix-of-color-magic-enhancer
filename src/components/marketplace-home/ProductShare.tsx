@@ -2,12 +2,26 @@ import { Copy, Facebook, Instagram, Linkedin, Mail, MessageCircle, Send, Share2,
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { recordShare, SHARE_PLATFORMS } from "@/lib/marketplace-home/share-stats.functions";
+
+type Platform = (typeof SHARE_PLATFORMS)[number];
 
 export function ProductShare({ name, description, url, id }: { name: string; description: string; url: string; id: string }) {
-  const shareUrl = () => new URL(url && url !== "#" ? url : `/#product-${encodeURIComponent(id)}`, window.location.origin).href;
-  const copyUrl = async () => {
+  // SEO-friendly share link: /product/$id carries title, description and OG image, then forwards to the product.
+  const shareUrl = () => {
+    const u = new URL(`/product/${encodeURIComponent(id)}`, window.location.origin);
+    u.searchParams.set("name", name.slice(0, 200));
+    u.searchParams.set("desc", description.slice(0, 400));
+    if (url && url.startsWith("/")) u.searchParams.set("to", url);
+    return u.href;
+  };
+  const track = (platform: Platform) => {
+    void recordShare({ data: { productId: id.slice(0, 120), productName: name.slice(0, 200), platform } }).catch(() => {});
+  };
+  const copyUrl = async (log = true) => {
     try {
       await navigator.clipboard.writeText(shareUrl());
+      if (log) track("Copy URL");
       toast.success("URL copied!");
       return true;
     } catch {
@@ -15,10 +29,10 @@ export function ProductShare({ name, description, url, id }: { name: string; des
       return false;
     }
   };
-  const openShare = (platform: string) => {
+  const openShare = (platform: Platform) => {
     const link = encodeURIComponent(shareUrl());
     const text = encodeURIComponent(`${name} — ${description}`);
-    const targets: Record<string, string> = {
+    const targets: Partial<Record<Platform, string>> = {
       Facebook: `https://www.facebook.com/sharer/sharer.php?u=${link}`,
       WhatsApp: `https://wa.me/?text=${text}%20${link}`,
       Telegram: `https://t.me/share/url?url=${link}&text=${text}`,
@@ -28,19 +42,21 @@ export function ProductShare({ name, description, url, id }: { name: string; des
     };
     const target = targets[platform];
     if (!target) return;
+    track(platform);
     if (platform === "Email") window.location.href = target;
     else window.open(target, "_blank", "noopener,noreferrer");
   };
   const instagram = async () => {
     // Instagram has no web URL-sharing endpoint. Use the device share sheet
     // when supported; otherwise copy the link for pasting into Instagram.
+    track("Instagram");
     if (navigator.share) {
       try { await navigator.share({ title: name, text: description, url: shareUrl() }); }
       catch (error) {
         if (error instanceof Error && error.name === "AbortError") return;
-        if (await copyUrl()) toast.info("Paste the copied link in Instagram.");
+        if (await copyUrl(false)) toast.info("Paste the copied link in Instagram.");
       }
-    } else if (await copyUrl()) toast.info("Paste the copied link in an Instagram message or story.");
+    } else if (await copyUrl(false)) toast.info("Paste the copied link in an Instagram message or story.");
   };
   return (
     <DropdownMenu>

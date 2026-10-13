@@ -74,8 +74,10 @@ import { Route as ApplyIndexRouteImport } from './routes/apply.index'
 import { Route as ApplyRoleRouteImport } from './routes/apply.$role'
 import { Route as DashboardRoleRouteImport } from './routes/dashboard.$role'
 import { Route as MModuleRouteImport } from './routes/m.$module'
+import { Route as ProductIdRouteImport } from './routes/product.$id'
 import { Route as StarRoleRouteImport } from './routes/star.$role'
 import { Route as SuperAdminDashboardsRouteImport } from './routes/super-admin.dashboards'
+import { Route as SuperAdminShareStatsRouteImport } from './routes/super-admin.share-stats'
 import { Route as VerifyCodeRouteImport } from './routes/verify.$code'
 import { Route as AuthenticatedAmsIndexRouteImport } from './routes/_authenticated/ams.index'
 import { Route as AuthenticatedAmsIdRouteImport } from './routes/_authenticated/ams.$id'
@@ -453,6 +455,11 @@ const MModuleRoute = MModuleRouteImport.update({
   path: '/m/$module',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProductIdRoute = ProductIdRouteImport.update({
+  id: '/product/$id',
+  path: '/product/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StarRoleRoute = StarRoleRouteImport.update({
   id: '/star/$role',
   path: '/star/$role',
@@ -461,6 +468,11 @@ const StarRoleRoute = StarRoleRouteImport.update({
 const SuperAdminDashboardsRoute = SuperAdminDashboardsRouteImport.update({
   id: '/super-admin/dashboards',
   path: '/super-admin/dashboards',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SuperAdminShareStatsRoute = SuperAdminShareStatsRouteImport.update({
+  id: '/super-admin/share-stats',
+  path: '/super-admin/share-stats',
   getParentRoute: () => rootRouteImport,
 } as any)
 const VerifyCodeRoute = VerifyCodeRouteImport.update({
@@ -666,8 +678,10 @@ export interface FileRoutesByFullPath {
   '/apply/$role': typeof ApplyRoleRoute
   '/dashboard/$role': typeof DashboardRoleRoute
   '/m/$module': typeof MModuleRoute
+  '/product/$id': typeof ProductIdRoute
   '/star/$role': typeof StarRoleRoute
   '/super-admin/dashboards': typeof SuperAdminDashboardsRoute
+  '/super-admin/share-stats': typeof SuperAdminShareStatsRoute
   '/verify/$code': typeof VerifyCodeRoute
   '/apply/': typeof ApplyIndexRoute
   '/ams/$id': typeof AuthenticatedAmsIdRoute
@@ -757,8 +771,10 @@ export interface FileRoutesByTo {
   '/apply/$role': typeof ApplyRoleRoute
   '/dashboard/$role': typeof DashboardRoleRoute
   '/m/$module': typeof MModuleRoute
+  '/product/$id': typeof ProductIdRoute
   '/star/$role': typeof StarRoleRoute
   '/super-admin/dashboards': typeof SuperAdminDashboardsRoute
+  '/super-admin/share-stats': typeof SuperAdminShareStatsRoute
   '/verify/$code': typeof VerifyCodeRoute
   '/apply': typeof ApplyIndexRoute
   '/ams/$id': typeof AuthenticatedAmsIdRoute
@@ -851,8 +867,10 @@ export interface FileRoutesById {
   '/apply/$role': typeof ApplyRoleRoute
   '/dashboard/$role': typeof DashboardRoleRoute
   '/m/$module': typeof MModuleRoute
+  '/product/$id': typeof ProductIdRoute
   '/star/$role': typeof StarRoleRoute
   '/super-admin/dashboards': typeof SuperAdminDashboardsRoute
+  '/super-admin/share-stats': typeof SuperAdminShareStatsRoute
   '/verify/$code': typeof VerifyCodeRoute
   '/apply/': typeof ApplyIndexRoute
   '/_authenticated/ams/$id': typeof AuthenticatedAmsIdRoute
@@ -945,8 +963,10 @@ export interface FileRouteTypes {
     | '/apply/$role'
     | '/dashboard/$role'
     | '/m/$module'
+    | '/product/$id'
     | '/star/$role'
     | '/super-admin/dashboards'
+    | '/super-admin/share-stats'
     | '/verify/$code'
     | '/apply/'
     | '/ams/$id'
@@ -1036,8 +1056,10 @@ export interface FileRouteTypes {
     | '/apply/$role'
     | '/dashboard/$role'
     | '/m/$module'
+    | '/product/$id'
     | '/star/$role'
     | '/super-admin/dashboards'
+    | '/super-admin/share-stats'
     | '/verify/$code'
     | '/apply'
     | '/ams/$id'
@@ -1129,8 +1151,10 @@ export interface FileRouteTypes {
     | '/apply/$role'
     | '/dashboard/$role'
     | '/m/$module'
+    | '/product/$id'
     | '/star/$role'
     | '/super-admin/dashboards'
+    | '/super-admin/share-stats'
     | '/verify/$code'
     | '/apply/'
     | '/_authenticated/ams/$id'
@@ -1173,8 +1197,10 @@ export interface RootRouteChildren {
   ApplyRoleRoute: typeof ApplyRoleRoute
   DashboardRoleRoute: typeof DashboardRoleRoute
   MModuleRoute: typeof MModuleRoute
+  ProductIdRoute: typeof ProductIdRoute
   StarRoleRoute: typeof StarRoleRoute
   SuperAdminDashboardsRoute: typeof SuperAdminDashboardsRoute
+  SuperAdminShareStatsRoute: typeof SuperAdminShareStatsRoute
   VerifyCodeRoute: typeof VerifyCodeRoute
   ApplyIndexRoute: typeof ApplyIndexRoute
 }
@@ -1636,6 +1662,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MModuleRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/product/$id': {
+      id: '/product/$id'
+      path: '/product/$id'
+      fullPath: '/product/$id'
+      preLoaderRoute: typeof ProductIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/star/$role': {
       id: '/star/$role'
       path: '/star/$role'
@@ -1648,6 +1681,13 @@ declare module '@tanstack/react-router' {
       path: '/super-admin/dashboards'
       fullPath: '/super-admin/dashboards'
       preLoaderRoute: typeof SuperAdminDashboardsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/super-admin/share-stats': {
+      id: '/super-admin/share-stats'
+      path: '/super-admin/share-stats'
+      fullPath: '/super-admin/share-stats'
+      preLoaderRoute: typeof SuperAdminShareStatsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/verify/$code': {
@@ -2021,8 +2061,10 @@ const rootRouteChildren: RootRouteChildren = {
   ApplyRoleRoute: ApplyRoleRoute,
   DashboardRoleRoute: DashboardRoleRoute,
   MModuleRoute: MModuleRoute,
+  ProductIdRoute: ProductIdRoute,
   StarRoleRoute: StarRoleRoute,
   SuperAdminDashboardsRoute: SuperAdminDashboardsRoute,
+  SuperAdminShareStatsRoute: SuperAdminShareStatsRoute,
   VerifyCodeRoute: VerifyCodeRoute,
   ApplyIndexRoute: ApplyIndexRoute,
 }

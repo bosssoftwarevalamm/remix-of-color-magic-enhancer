@@ -1246,6 +1246,18 @@ function SuperAdminSwitch({ t }: { t: (s: string) => string }) {
                 </span>
               </Link>
             </DropdownMenuItem>
+            <DropdownMenuItem
+              asChild
+              className="kr-item cursor-pointer focus:bg-white/10"
+            >
+              <Link to="/super-admin/share-stats" className="flex items-center gap-2">
+                <LayoutDashboard className="h-3.5 w-3.5 text-cyan-300" />
+                <span className="flex w-full flex-col">
+                  <span className="text-[12.5px] font-semibold">Share Stats</span>
+                  <span className="text-[10.5px] text-white/50">Shares by social platform</span>
+                </span>
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuSeparator className="bg-white/10" />
             <AiDashboardFinder />
             <div className="p-2" onKeyDown={(e) => e.stopPropagation()}>
