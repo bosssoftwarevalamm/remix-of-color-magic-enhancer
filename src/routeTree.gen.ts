@@ -77,6 +77,7 @@ import { Route as MModuleRouteImport } from './routes/m.$module'
 import { Route as ProductIdRouteImport } from './routes/product.$id'
 import { Route as StarRoleRouteImport } from './routes/star.$role'
 import { Route as SuperAdminDashboardsRouteImport } from './routes/super-admin.dashboards'
+import { Route as SuperAdminShareStatsRouteImport } from './routes/super-admin.share-stats'
 import { Route as VerifyCodeRouteImport } from './routes/verify.$code'
 import { Route as AuthenticatedAmsIndexRouteImport } from './routes/_authenticated/ams.index'
 import { Route as AuthenticatedAmsIdRouteImport } from './routes/_authenticated/ams.$id'
@@ -469,6 +470,11 @@ const SuperAdminDashboardsRoute = SuperAdminDashboardsRouteImport.update({
   path: '/super-admin/dashboards',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SuperAdminShareStatsRoute = SuperAdminShareStatsRouteImport.update({
+  id: '/super-admin/share-stats',
+  path: '/super-admin/share-stats',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VerifyCodeRoute = VerifyCodeRouteImport.update({
   id: '/verify/$code',
   path: '/verify/$code',
@@ -675,6 +681,7 @@ export interface FileRoutesByFullPath {
   '/product/$id': typeof ProductIdRoute
   '/star/$role': typeof StarRoleRoute
   '/super-admin/dashboards': typeof SuperAdminDashboardsRoute
+  '/super-admin/share-stats': typeof SuperAdminShareStatsRoute
   '/verify/$code': typeof VerifyCodeRoute
   '/apply/': typeof ApplyIndexRoute
   '/ams/$id': typeof AuthenticatedAmsIdRoute
@@ -767,6 +774,7 @@ export interface FileRoutesByTo {
   '/product/$id': typeof ProductIdRoute
   '/star/$role': typeof StarRoleRoute
   '/super-admin/dashboards': typeof SuperAdminDashboardsRoute
+  '/super-admin/share-stats': typeof SuperAdminShareStatsRoute
   '/verify/$code': typeof VerifyCodeRoute
   '/apply': typeof ApplyIndexRoute
   '/ams/$id': typeof AuthenticatedAmsIdRoute
@@ -862,6 +870,7 @@ export interface FileRoutesById {
   '/product/$id': typeof ProductIdRoute
   '/star/$role': typeof StarRoleRoute
   '/super-admin/dashboards': typeof SuperAdminDashboardsRoute
+  '/super-admin/share-stats': typeof SuperAdminShareStatsRoute
   '/verify/$code': typeof VerifyCodeRoute
   '/apply/': typeof ApplyIndexRoute
   '/_authenticated/ams/$id': typeof AuthenticatedAmsIdRoute
@@ -957,6 +966,7 @@ export interface FileRouteTypes {
     | '/product/$id'
     | '/star/$role'
     | '/super-admin/dashboards'
+    | '/super-admin/share-stats'
     | '/verify/$code'
     | '/apply/'
     | '/ams/$id'
@@ -1049,6 +1059,7 @@ export interface FileRouteTypes {
     | '/product/$id'
     | '/star/$role'
     | '/super-admin/dashboards'
+    | '/super-admin/share-stats'
     | '/verify/$code'
     | '/apply'
     | '/ams/$id'
@@ -1143,6 +1154,7 @@ export interface FileRouteTypes {
     | '/product/$id'
     | '/star/$role'
     | '/super-admin/dashboards'
+    | '/super-admin/share-stats'
     | '/verify/$code'
     | '/apply/'
     | '/_authenticated/ams/$id'
@@ -1188,6 +1200,7 @@ export interface RootRouteChildren {
   ProductIdRoute: typeof ProductIdRoute
   StarRoleRoute: typeof StarRoleRoute
   SuperAdminDashboardsRoute: typeof SuperAdminDashboardsRoute
+  SuperAdminShareStatsRoute: typeof SuperAdminShareStatsRoute
   VerifyCodeRoute: typeof VerifyCodeRoute
   ApplyIndexRoute: typeof ApplyIndexRoute
 }
@@ -1670,6 +1683,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SuperAdminDashboardsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/super-admin/share-stats': {
+      id: '/super-admin/share-stats'
+      path: '/super-admin/share-stats'
+      fullPath: '/super-admin/share-stats'
+      preLoaderRoute: typeof SuperAdminShareStatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/verify/$code': {
       id: '/verify/$code'
       path: '/verify/$code'
@@ -2044,6 +2064,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProductIdRoute: ProductIdRoute,
   StarRoleRoute: StarRoleRoute,
   SuperAdminDashboardsRoute: SuperAdminDashboardsRoute,
+  SuperAdminShareStatsRoute: SuperAdminShareStatsRoute,
   VerifyCodeRoute: VerifyCodeRoute,
   ApplyIndexRoute: ApplyIndexRoute,
 }
