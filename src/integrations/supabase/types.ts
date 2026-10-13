@@ -834,6 +834,30 @@ export type Database = {
         }
         Relationships: []
       }
+      product_share_events: {
+        Row: {
+          created_at: string
+          id: string
+          platform: string
+          product_id: string
+          product_name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          platform: string
+          product_id: string
+          product_name: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          platform?: string
+          product_id?: string
+          product_name?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
