@@ -1,4 +1,5 @@
 import { useRouterState } from "@tanstack/react-router";
+import "@/styles/marketplace-home.css";
 import { ProductShare } from "@/components/marketplace-home/ProductShare";
 
 /** Floating Share button for Super Admin pages and every Star dashboard. */
