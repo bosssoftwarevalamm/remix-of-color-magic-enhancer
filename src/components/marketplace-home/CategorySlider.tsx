@@ -9,10 +9,10 @@ const CATEGORIES = [
   { icon: Sparkles, name: "All", color: "from-cyan-400 to-blue-600", link: "/#all" },
   { icon: GraduationCap, name: "Education", color: "from-blue-500 to-indigo-600", link: "/#Education" },
   { icon: Stethoscope, name: "Healthcare", color: "from-pink-500 to-rose-600", link: "/#Healthcare" },
-  { icon: Utensils, name: "Restaurant & POS", color: "from-orange-500 to-red-500", link: "/#Retail%20%26%20POS" },
-  { icon: ShoppingBag, name: "Retail & POS", color: "from-amber-500 to-orange-600", link: "/#Retail%20%26%20POS" },
+  { icon: Utensils, name: "Restaurant & POS", color: "from-rose-500 to-red-700", link: "/#Retail%20%26%20POS" },
+  { icon: ShoppingBag, name: "Retail & POS", color: "from-teal-400 to-emerald-700", link: "/#Retail%20%26%20POS" },
   { icon: Hotel, name: "Hotel & Hospitality", color: "from-fuchsia-500 to-pink-600" , link: "/#Hospitality" },
-  { icon: Home, name: "Real Estate", color: "from-amber-500 to-yellow-600", link: "/#Real%20Estate" },
+  { icon: Home, name: "Real Estate", color: "from-sky-400 to-blue-700", link: "/#Real%20Estate" },
   { icon: Car, name: "Automotive", color: "from-slate-500 to-zinc-700", link: "/#Automotive" },
   { icon: Plane, name: "Travel", color: "from-sky-500 to-cyan-600", link: "/#Travel" },
   { icon: CreditCard, name: "Finance", color: "from-emerald-500 to-teal-600", link: "/#Finance" },
@@ -24,7 +24,7 @@ const CATEGORIES = [
   { icon: Factory, name: "Manufacturing", color: "from-stone-500 to-neutral-700", link: "/#Manufacturing" },
   { icon: Building, name: "Enterprise", color: "from-blue-600 to-indigo-800", link: "/#Enterprise" },
   { icon: Building2, name: "Government", color: "from-emerald-600 to-green-800", link: "/#Government" },
-  { icon: Scale, name: "Legal", color: "from-yellow-600 to-amber-800", link: "/#Legal" },
+  { icon: Scale, name: "Legal", color: "from-indigo-500 to-violet-800", link: "/#Legal" },
   { icon: Shield, name: "Security", color: "from-red-600 to-rose-800", link: "/#Security" },
   { icon: Server, name: "IT & SaaS", color: "from-gray-500 to-slate-700", link: "/#IT" },
   { icon: Headphones, name: "Support", color: "from-teal-500 to-cyan-700", link: "/#Support" },
@@ -159,7 +159,7 @@ const CategorySlider = () => {
                 href={cat.link}
                 onClick={(e) => { if (movedRef.current) e.preventDefault(); }}
                 draggable={false}
-                className={`group relative flex-shrink-0 flex items-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-br ${cat.color} text-white text-sm font-bold whitespace-nowrap shadow-[inset_0_1px_0_rgba(255,255,255,0.45),0_10px_26px_-12px_rgba(0,0,0,0.85)] border border-white/25 transition-transform duration-300 ease-[cubic-bezier(.22,1,.36,1)] hover:-translate-y-1`}
+                className={`group relative flex-shrink-0 flex items-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-br ${cat.color} text-white text-sm font-bold whitespace-nowrap saturate-150 shadow-[inset_0_1px_0_rgba(255,255,255,0.55),inset_0_-3px_0_rgba(0,0,0,0.35),0_4px_0_rgba(0,0,0,0.45),0_14px_26px_-10px_rgba(0,0,0,0.9)] border border-white/30 active:translate-y-0.5 transition-transform duration-300 ease-[cubic-bezier(.22,1,.36,1)] hover:-translate-y-1`}
               >
                 <span className="absolute inset-0 rounded-2xl bg-gradient-to-t from-transparent via-white/10 to-white/30 pointer-events-none" />
                 <span className="relative flex items-center justify-center w-7 h-7 rounded-lg bg-white/25 backdrop-blur-sm shadow-inner border border-white/30">
