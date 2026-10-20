@@ -3671,7 +3671,7 @@ const DemoCard = memo(({ demo, index, isFavorite, onToggleFavorite }: {
                     <Clock className="h-4 w-4 mr-2" /> Coming Soon
                   </Button>
                   <Button 
-                    className="sv-btn sv-btn-gold flex-1"
+                    className="sv-btn sv-btn-violet flex-1"
                     onClick={() => toast.info("📧 We'll notify you when this is available!", { description: demo.name })}
                   >
                     <Bell className="h-4 w-4 mr-2" /> Notify Me

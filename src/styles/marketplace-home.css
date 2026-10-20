@@ -338,38 +338,69 @@
   to { transform: translate3d(130%, 0, 0); }
 }
 
+/* 3D extruded edge + denser colour for every variant */
+.mpc-home .sv-btn:not([disabled]):not(.sv-btn-muted) {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.32),
+    0 3px 0 var(--sv-btn-edge, #0b4a5c),
+    0 10px 20px -8px rgba(3, 12, 26, 0.9),
+    0 0 18px -6px var(--sv-btn-glow, rgba(34, 211, 238, 0.45));
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+}
+.mpc-home .sv-btn:not([disabled]):not(.sv-btn-muted):hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.32),
+    0 5px 0 var(--sv-btn-edge, #0b4a5c),
+    0 18px 30px -12px rgba(3, 12, 26, 0.95),
+    0 0 28px -4px var(--sv-btn-glow, rgba(34, 211, 238, 0.6));
+}
+.mpc-home .sv-btn:not([disabled]):not(.sv-btn-muted):active {
+  transform: translate3d(0, 3px, 0);
+  box-shadow:
+    inset 0 2px 6px rgba(0, 0, 0, 0.42),
+    0 0 0 var(--sv-btn-edge, #0b4a5c),
+    0 4px 10px -6px rgba(3, 12, 26, 0.9);
+}
 .mpc-home .sv-btn-cyan {
-  --sv-btn-bg: linear-gradient(180deg, #38dcf4, #0e7490);
-  --sv-btn-rim: rgba(165, 243, 252, 0.5);
-  --sv-btn-glow: rgba(34, 211, 238, 0.55);
+  --sv-btn-bg: linear-gradient(180deg, #2fe0ff 0%, #0aa5c9 55%, #075e7a 100%);
+  --sv-btn-rim: rgba(165, 243, 252, 0.6);
+  --sv-btn-glow: rgba(34, 211, 238, 0.7);
+  --sv-btn-edge: #05495e;
 }
 .mpc-home .sv-btn-emerald {
-  --sv-btn-bg: linear-gradient(180deg, #38e9a8, #047857);
-  --sv-btn-rim: rgba(167, 243, 208, 0.5);
-  --sv-btn-glow: rgba(16, 185, 129, 0.5);
+  --sv-btn-bg: linear-gradient(180deg, #34f0a8 0%, #10b97a 55%, #046b4a 100%);
+  --sv-btn-rim: rgba(167, 243, 208, 0.6);
+  --sv-btn-glow: rgba(16, 185, 129, 0.7);
+  --sv-btn-edge: #034d36;
 }
 .mpc-home .sv-btn-gold {
-  --sv-btn-bg: linear-gradient(180deg, #ffd074, #ea8a17);
-  --sv-btn-rim: rgba(255, 224, 160, 0.6);
-  --sv-btn-glow: rgba(245, 158, 11, 0.5);
-  color: #2a1704;
+  --sv-btn-bg: linear-gradient(180deg, #ff8a5c 0%, #f04e3e 55%, #a3202a 100%);
+  --sv-btn-rim: rgba(255, 190, 170, 0.6);
+  --sv-btn-glow: rgba(240, 78, 62, 0.6);
+  --sv-btn-edge: #6e1119;
 }
 .mpc-home .sv-btn-violet {
-  --sv-btn-bg: linear-gradient(180deg, #a78bfa, #4f46e5);
-  --sv-btn-rim: rgba(196, 181, 253, 0.5);
-  --sv-btn-glow: rgba(139, 92, 246, 0.5);
+  --sv-btn-bg: linear-gradient(180deg, #7aa2ff 0%, #3b5bf0 55%, #1e2c9e 100%);
+  --sv-btn-rim: rgba(190, 205, 255, 0.6);
+  --sv-btn-glow: rgba(59, 91, 240, 0.65);
+  --sv-btn-edge: #141d6b;
 }
 .mpc-home .sv-btn-hero-light {
-  --sv-btn-bg: linear-gradient(180deg, #ffffff, #dfe8f5);
+  --sv-btn-bg: linear-gradient(180deg, #ffffff, #d3dff0);
   --sv-btn-rim: rgba(255, 255, 255, 0.9);
   --sv-btn-glow: rgba(255, 255, 255, 0.6);
+  --sv-btn-edge: #8a9bb5;
   color: #0b1a30;
+  text-shadow: none !important;
 }
 .mpc-home .sv-btn-hero-glass {
-  --sv-btn-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.08));
-  --sv-btn-rim: rgba(255, 255, 255, 0.5);
-  --sv-btn-glow: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(14px) saturate(150%);
+  --sv-btn-bg: linear-gradient(180deg, rgba(56, 200, 240, 0.55), rgba(14, 80, 130, 0.75));
+  --sv-btn-rim: rgba(165, 230, 255, 0.6);
+  --sv-btn-glow: rgba(56, 200, 240, 0.55);
+  --sv-btn-edge: #0a3552;
+  backdrop-filter: blur(14px) saturate(170%);
 }
 .mpc-home .sv-btn-muted,
 .mpc-home .sv-btn:disabled,
