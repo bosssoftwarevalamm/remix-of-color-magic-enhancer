@@ -10,3 +10,4 @@
 <!-- LOVABLE:END -->
 
 - Marketplace product sharing uses one shared ProductShare menu in the common card renderer; Instagram uses native sharing or clipboard fallback because it has no web share endpoint.
+- Share clicks are logged server-side to product_share_events; share links use /product/$id which carries per-product SEO/OG tags then forwards to the product.
