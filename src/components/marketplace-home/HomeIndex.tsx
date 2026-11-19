@@ -3525,6 +3525,7 @@ const DemoCard = memo(({ demo, index, isFavorite, onToggleFavorite }: {
 }) => {
   const Icon = demo.icon;
   const [activeTab, setActiveTab] = useState<'features' | 'tech'>('features');
+  const cardFeatures = [...demo.features, ...['Reports & Analytics', 'Role & Permission Control'].filter((f) => !demo.features.includes(f))];
 
   return (
     <div id={`product-${encodeURIComponent(demo.id)}`} className="sv-card-shell relative">
@@ -3639,7 +3640,7 @@ const DemoCard = memo(({ demo, index, isFavorite, onToggleFavorite }: {
                   onClick={() => setActiveTab('features')}
                   className={`sv-tab ${activeTab === 'features' ? 'sv-tab-on' : ''}`}
                 >
-                  Features ({demo.features.length})
+                  Features ({cardFeatures.length})
                 </button>
                 <button
                   data-no-3d
@@ -3652,7 +3653,7 @@ const DemoCard = memo(({ demo, index, isFavorite, onToggleFavorite }: {
 
               <div className="min-h-[52px] sv-fade-swap rounded-lg border border-white/10 bg-white/[0.03] p-2.5" key={activeTab}>
                 <ul className="grid grid-cols-2 gap-x-3 gap-y-1.5">
-                  {(activeTab === 'features' ? demo.features : [...demo.frontend, ...demo.backend]).map((item) => (
+                  {(activeTab === 'features' ? cardFeatures : [...demo.frontend, ...demo.backend]).map((item) => (
                     <li key={item} className="flex items-center gap-1.5 text-[11.5px] text-gray-200">
                       <CheckCircle className={`h-3.5 w-3.5 shrink-0 ${activeTab === 'features' ? 'text-emerald-400' : 'text-purple-300'}`} />
                       <span className="truncate">{item}</span>
