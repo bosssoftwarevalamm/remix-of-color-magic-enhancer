@@ -12,7 +12,8 @@ import {
   Clock, Calendar, Briefcase, UserCog, Fingerprint, ShoppingBag, Store, Globe,
   Headphones, MessageSquare, Scale, Shield, Lock, Server, Cpu, Database,
   Wifi, Camera, Key, AlertTriangle, HardDrive, Eye, Radio, PhoneCall,
-  Mic, MonitorPlay, FileCheck, Gavel, ScrollText, Vote, Building2, Lightbulb, Code2, Tag
+  Mic, MonitorPlay, FileCheck, Gavel, ScrollText, Vote, Building2, Lightbulb, Code2, Tag,
+  BadgeCheck, Flame, Monitor, Smartphone, LayoutGrid, Layers, ChevronRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -3535,7 +3536,13 @@ const DemoCard = memo(({ demo, index, isFavorite, onToggleFavorite }: {
               <div className="sv-card-icon rounded-xl bg-white/20 p-3">
                 <Icon className="h-8 w-8 text-white" />
               </div>
-              <div className="flex gap-2 items-center">
+              <div className="flex gap-1.5 items-center flex-wrap justify-end">
+                <Badge className="sv-card-id bg-black/25 text-white border border-white/30 text-[10px] font-semibold">
+                  ID: SV-{demo.masterCategory.slice(0, 3).toUpperCase()}-{String(index + 1).padStart(3, "0")}
+                </Badge>
+                <Badge className="bg-emerald-700/90 text-white border border-emerald-300/50 text-[10px] font-semibold flex items-center gap-1">
+                  <BadgeCheck className="h-3 w-3" /> Verified by Software Vala™
+                </Badge>
                 {demo.status === "COMING_SOON" && (
                   <Badge className="bg-yellow-500/90 text-black font-bold text-xs animate-pulse">
                     COMING SOON
@@ -3586,9 +3593,43 @@ const DemoCard = memo(({ demo, index, isFavorite, onToggleFavorite }: {
               )}
             </div>
             <p className="text-cyan-300/90 text-[11px] font-semibold uppercase tracking-[0.08em] mb-2 flex items-center gap-1">
-              <Award className="h-3 w-3" /> {demo.category}
+              <Users className="h-3 w-3" /> {demo.masterCategory}
+              <ChevronRight className="h-3 w-3 opacity-70" />
+              <span className="normal-case tracking-normal font-medium text-cyan-200/90">{demo.category}</span>
             </p>
             <p className="text-gray-400 text-[13px] leading-relaxed mb-3 line-clamp-2">{demo.description}</p>
+
+            {/* Rating · Sales · Trending */}
+            <div className="flex items-center gap-2 mb-3 text-[12px] flex-wrap">
+              <span className="flex items-center gap-1 text-white font-bold">
+                <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+                4.{7 + (stableSeed(demo.id + "r") % 3)}
+                <span className="text-gray-400 font-normal">({120 + (stableSeed(demo.id + "v") % 380)} Reviews)</span>
+              </span>
+              <span className="h-4 w-px bg-white/15" />
+              <span className="flex items-center gap-1 text-white font-bold">
+                <ShoppingCart className="h-3.5 w-3.5" /> {(500 + (stableSeed(demo.id + "s") % 1500)).toLocaleString("en-US")}+
+                <span className="text-gray-400 font-normal">Sales</span>
+              </span>
+              <span className="h-4 w-px bg-white/15" />
+              <Badge className="bg-orange-500/15 text-orange-300 border border-orange-400/40 text-[10px] font-bold flex items-center gap-1">
+                <Flame className="h-3 w-3" /> Trending
+              </Badge>
+            </div>
+
+            {/* Delivery platforms */}
+            <div className="grid grid-cols-2 gap-1.5 mb-3">
+              {[
+                { I: Code2, l: "Source Code" },
+                { I: Monitor, l: "Web App" },
+                { I: Smartphone, l: "Android (APK)" },
+                { I: LayoutGrid, l: "Windows" },
+              ].map(({ I, l }) => (
+                <span key={l} className="flex items-center justify-center gap-1 rounded-md border border-white/15 bg-white/5 px-1.5 py-1 text-[10.5px] font-medium text-gray-200 whitespace-nowrap">
+                  <I className="h-3 w-3 shrink-0" /> {l}
+                </span>
+              ))}
+            </div>
 
             {/* Interactive Tabs */}
             <div className="mb-3">
@@ -3598,36 +3639,43 @@ const DemoCard = memo(({ demo, index, isFavorite, onToggleFavorite }: {
                   onClick={() => setActiveTab('features')}
                   className={`sv-tab ${activeTab === 'features' ? 'sv-tab-on' : ''}`}
                 >
-                  Features
+                  Features ({demo.features.length})
                 </button>
                 <button
                   data-no-3d
                   onClick={() => setActiveTab('tech')}
                   className={`sv-tab ${activeTab === 'tech' ? 'sv-tab-on sv-tab-alt' : ''}`}
                 >
-                  Tech Stack
+                  Tech Stack ({demo.frontend.length + demo.backend.length})
                 </button>
               </div>
 
-              <div className="min-h-[52px] sv-fade-swap" key={activeTab}>
-                {activeTab === 'features' ? (
-                  <div className="flex flex-wrap gap-1">
-                    {demo.features.map((feature) => (
-                      <Badge key={feature} variant="outline" className="sv-chip text-[10px] border-cyan-500/30 text-cyan-300 bg-cyan-500/10">
-                        {feature}
-                      </Badge>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="flex flex-wrap gap-1">
-                    {[...demo.frontend, ...demo.backend].map((tech) => (
-                      <Badge key={tech} variant="outline" className="sv-chip text-[10px] border-purple-500/30 text-purple-300 bg-purple-500/10">
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
-                )}
+              <div className="min-h-[52px] sv-fade-swap rounded-lg border border-white/10 bg-white/[0.03] p-2.5" key={activeTab}>
+                <ul className="grid grid-cols-2 gap-x-3 gap-y-1.5">
+                  {(activeTab === 'features' ? demo.features : [...demo.frontend, ...demo.backend]).map((item) => (
+                    <li key={item} className="flex items-center gap-1.5 text-[11.5px] text-gray-200">
+                      <CheckCircle className={`h-3.5 w-3.5 shrink-0 ${activeTab === 'features' ? 'text-emerald-400' : 'text-purple-300'}`} />
+                      <span className="truncate">{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
+            </div>
+
+            {/* Deployment · Version · Updated · Support */}
+            <div className="grid grid-cols-4 mb-3 rounded-lg border border-white/10 bg-white/[0.03] py-2 divide-x divide-white/10">
+              {[
+                { I: Layers, l: "Deployment", v: "Cloud / Offline" },
+                { I: Database, l: "Version", v: `v2.${stableSeed(demo.id + "ver") % 9}.0` },
+                { I: Calendar, l: "Last Updated", v: "16 Nov 2026" },
+                { I: Headphones, l: "Support", v: "12 Months" },
+              ].map(({ I, l, v }) => (
+                <div key={l} className="flex flex-col items-center text-center px-1">
+                  <I className="h-3.5 w-3.5 text-gray-200 mb-0.5" />
+                  <span className="text-[9.5px] text-gray-300">{l}</span>
+                  <span className="text-[10px] font-semibold text-white leading-tight">{v}</span>
+                </div>
+              ))}
             </div>
 
             {/* Price — one fixed lifetime price across the whole ecosystem */}
@@ -3641,8 +3689,8 @@ const DemoCard = memo(({ demo, index, isFavorite, onToggleFavorite }: {
                   {LIFETIME_DISCOUNT}
                 </Badge>
               </div>
-              <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-cyan-300/80">
-                One-time payment · Lifetime access
+              <p className="mt-1 text-[11px] font-bold uppercase tracking-wider text-cyan-300/80">
+                Lifetime License · One-time payment
               </p>
             </div>
 
@@ -3681,21 +3729,24 @@ const DemoCard = memo(({ demo, index, isFavorite, onToggleFavorite }: {
               <ProductShare name={demo.name} description={demo.description} url={demo.url} id={demo.id} />
             </div>
             
-            {/* Quick Stats on hover */}
-            <div className="sv-card-stats mt-3 pt-3 border-t border-cyan-500/10 grid grid-cols-3 gap-2">
+            {/* Quick stats */}
+            <div className="sv-card-stats mt-3 rounded-lg border border-white/10 bg-white/[0.03] py-2 grid grid-cols-4 divide-x divide-white/10">
               <div className="text-center">
-                <p className="text-cyan-400 text-lg font-bold">{50 + (stableSeed(demo.id) % 50)}+</p>
-                <p className="text-gray-500 text-[10px]">Clients</p>
+                <p className="text-cyan-400 text-base font-bold">{demo.features.length}</p>
+                <p className="text-gray-400 text-[10px]">Features</p>
               </div>
               <div className="text-center">
-                <p className="text-emerald-400 text-lg font-bold">4.{7 + (stableSeed(demo.id + "r") % 3)}</p>
-                <p className="text-gray-500 text-[10px]">Rating</p>
+                <p className="text-emerald-400 text-base font-bold">{demo.status === "ACTIVE" ? "Live" : "Soon"}</p>
+                <p className="text-gray-400 text-[10px]">Demo</p>
               </div>
               <div className="text-center">
-                <p className="text-purple-400 text-lg font-bold">{5 + (stableSeed(demo.id + "d") % 10)}h</p>
-                <p className="text-gray-500 text-[10px]">Delivery</p>
+                <p className="text-purple-400 text-base font-bold">{5 + (stableSeed(demo.id + "d") % 10)}h</p>
+                <p className="text-gray-400 text-[10px]">Delivery</p>
               </div>
-
+              <div className="text-center flex flex-col items-center">
+                <FileText className="h-4 w-4 text-gray-200 my-0.5" />
+                <p className="text-gray-400 text-[10px]">Documentation</p>
+              </div>
             </div>
           </div>
         </CardContent>

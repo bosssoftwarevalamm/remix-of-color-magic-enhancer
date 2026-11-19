@@ -505,7 +505,7 @@
 .mpc-home .sv-card:hover .sv-card-quick,
 .mpc-home .sv-card:focus-within .sv-card-quick { opacity: 1; transform: translate3d(0, 0, 0); }
 
-.mpc-home .sv-card-stats { opacity: 0.35; transition: opacity 260ms ease; }
+.mpc-home .sv-card-stats { opacity: 1; transition: opacity 260ms ease; }
 .mpc-home .sv-card:hover .sv-card-stats { opacity: 1; }
 
 .mpc-home .sv-price { text-shadow: 0 0 18px rgba(16, 185, 129, 0.45); }
