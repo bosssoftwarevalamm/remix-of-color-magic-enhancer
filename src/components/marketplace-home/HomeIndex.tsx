@@ -3507,16 +3507,6 @@ const Index = () => {
 };
 
 // Demo Card Component - Enhanced with interactions
-/** Deterministic pseudo-random so SSR and client render identical numbers. */
-const stableSeed = (key: string) => {
-  let h = 2166136261;
-  for (let i = 0; i < key.length; i++) {
-    h ^= key.charCodeAt(i);
-    h = Math.imul(h, 16777619);
-  }
-  return Math.abs(h);
-};
-
 const DemoCard = memo(({ demo, index, isFavorite, onToggleFavorite }: {
   demo: Demo; 
   index: number; 
@@ -3525,7 +3515,6 @@ const DemoCard = memo(({ demo, index, isFavorite, onToggleFavorite }: {
 }) => {
   const Icon = demo.icon;
   const [activeTab, setActiveTab] = useState<'features' | 'tech'>('features');
-  const cardFeatures = [...demo.features, ...['Reports & Analytics', 'Role & Permission Control'].filter((f) => !demo.features.includes(f))];
 
   return (
     <div id={`product-${encodeURIComponent(demo.id)}`} className="sv-card-shell relative">
@@ -3600,22 +3589,16 @@ const DemoCard = memo(({ demo, index, isFavorite, onToggleFavorite }: {
             </p>
             <p className="text-gray-400 text-[13px] leading-relaxed mb-3 line-clamp-2">{demo.description}</p>
 
-            {/* Rating · Sales · Trending */}
+            {/* Only show verified marketplace metrics; this catalog has no rating or sales fields yet. */}
             <div className="flex items-center gap-2 mb-3 text-[12px] flex-wrap">
-              <span className="flex items-center gap-1 text-white font-bold">
-                <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
-                4.{7 + (stableSeed(demo.id + "r") % 3)}
-                <span className="text-gray-400 font-normal">({120 + (stableSeed(demo.id + "v") % 380)} Reviews)</span>
+              <span className="flex items-center gap-1 text-gray-300">
+                <Star className="h-3.5 w-3.5" />
+                Rating and reviews not listed
               </span>
               <span className="h-4 w-px bg-white/15" />
-              <span className="flex items-center gap-1 text-white font-bold">
-                <ShoppingCart className="h-3.5 w-3.5" /> {(500 + (stableSeed(demo.id + "s") % 1500)).toLocaleString("en-US")}+
-                <span className="text-gray-400 font-normal">Sales</span>
+              <span className="flex items-center gap-1 text-gray-300">
+                <ShoppingCart className="h-3.5 w-3.5" /> Sales not listed
               </span>
-              <span className="h-4 w-px bg-white/15" />
-              <Badge className="bg-orange-500/15 text-orange-300 border border-orange-400/40 text-[10px] font-bold flex items-center gap-1">
-                <Flame className="h-3 w-3" /> Trending
-              </Badge>
             </div>
 
             {/* Delivery platforms */}
@@ -3640,7 +3623,7 @@ const DemoCard = memo(({ demo, index, isFavorite, onToggleFavorite }: {
                   onClick={() => setActiveTab('features')}
                   className={`sv-tab ${activeTab === 'features' ? 'sv-tab-on' : ''}`}
                 >
-                  Features ({cardFeatures.length})
+                  Features ({demo.features.length})
                 </button>
                 <button
                   data-no-3d
@@ -3653,7 +3636,7 @@ const DemoCard = memo(({ demo, index, isFavorite, onToggleFavorite }: {
 
               <div className="min-h-[52px] sv-fade-swap rounded-lg border border-white/10 bg-white/[0.03] p-2.5" key={activeTab}>
                 <ul className="grid grid-cols-2 gap-x-3 gap-y-1.5">
-                  {(activeTab === 'features' ? cardFeatures : [...demo.frontend, ...demo.backend]).map((item) => (
+                  {(activeTab === 'features' ? demo.features : [...demo.frontend, ...demo.backend]).map((item) => (
                     <li key={item} className="flex items-center gap-1.5 text-[11.5px] text-gray-200">
                       <CheckCircle className={`h-3.5 w-3.5 shrink-0 ${activeTab === 'features' ? 'text-emerald-400' : 'text-purple-300'}`} />
                       <span className="truncate">{item}</span>
@@ -3666,10 +3649,10 @@ const DemoCard = memo(({ demo, index, isFavorite, onToggleFavorite }: {
             {/* Deployment · Version · Updated · Support */}
             <div className="grid grid-cols-4 mb-3 rounded-lg border border-white/10 bg-white/[0.03] py-2 divide-x divide-white/10">
               {[
-                { I: Layers, l: "Deployment", v: "Cloud / Offline" },
-                { I: Database, l: "Version", v: `v2.${stableSeed(demo.id + "ver") % 9}.0` },
-                { I: Calendar, l: "Last Updated", v: "16 Nov 2026" },
-                { I: Headphones, l: "Support", v: "12 Months" },
+                { I: Layers, l: "Deployment", v: "Not listed" },
+                { I: Database, l: "Version", v: "Not listed" },
+                { I: Calendar, l: "Last Updated", v: "Not listed" },
+                { I: Headphones, l: "Support", v: "Not listed" },
               ].map(({ I, l, v }) => (
                 <div key={l} className="flex flex-col items-center text-center px-1">
                   <I className="h-3.5 w-3.5 text-gray-200 mb-0.5" />
@@ -3733,7 +3716,7 @@ const DemoCard = memo(({ demo, index, isFavorite, onToggleFavorite }: {
             {/* Quick stats */}
             <div className="sv-card-stats mt-3 rounded-lg border border-white/10 bg-white/[0.03] py-2 grid grid-cols-4 divide-x divide-white/10">
               <div className="text-center">
-                <p className="text-cyan-400 text-base font-bold">{cardFeatures.length}</p>
+                <p className="text-cyan-400 text-base font-bold">{demo.features.length}</p>
                 <p className="text-gray-400 text-[10px]">Features</p>
               </div>
               <div className="text-center">
@@ -3741,7 +3724,7 @@ const DemoCard = memo(({ demo, index, isFavorite, onToggleFavorite }: {
                 <p className="text-gray-400 text-[10px]">Demo</p>
               </div>
               <div className="text-center">
-                <p className="text-purple-400 text-base font-bold">{5 + (stableSeed(demo.id + "d") % 10)}h</p>
+                <p className="text-purple-400 text-base font-bold">Not listed</p>
                 <p className="text-gray-400 text-[10px]">Delivery</p>
               </div>
               <div className="text-center flex flex-col items-center">
