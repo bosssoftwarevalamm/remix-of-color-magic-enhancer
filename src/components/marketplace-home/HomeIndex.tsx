@@ -3733,7 +3733,7 @@ const DemoCard = memo(({ demo, index, isFavorite, onToggleFavorite }: {
             {/* Quick stats */}
             <div className="sv-card-stats mt-3 rounded-lg border border-white/10 bg-white/[0.03] py-2 grid grid-cols-4 divide-x divide-white/10">
               <div className="text-center">
-                <p className="text-cyan-400 text-base font-bold">{demo.features.length}</p>
+                <p className="text-cyan-400 text-base font-bold">{cardFeatures.length}</p>
                 <p className="text-gray-400 text-[10px]">Features</p>
               </div>
               <div className="text-center">
